@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DonationApp</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="nao_possui_uma_conta">Não possui uma conta?</string>
+    <string name="crie_uma_gratuitamente">Crie uma gratuitamente.</string>
 </resources>
