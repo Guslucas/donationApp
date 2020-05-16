@@ -23,4 +23,8 @@
     <string name="cnpj">CNPJ</string>
     <string name="data_de_fundacao">Data de Fundação</string>
     <string name="juridica">Júridica</string>
+    <string name="quanto">Quanto ?</string>
+    <string name="gerar_boleto">Gerar Boleto</string>
+    <string name="transferir">Transferir</string>
+    <string name="valor">Valor</string>
 </resources>
