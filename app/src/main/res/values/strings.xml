@@ -4,4 +4,12 @@
     <string name="login">Login</string>
     <string name="nao_possui_uma_conta">Não possui uma conta?</string>
     <string name="crie_uma_gratuitamente">Crie uma gratuitamente.</string>
+    <string name="endereco">Endereço</string>
+    <string name="cep">CEP</string>
+    <string name="bairro">Bairro</string>
+    <string name="rua_avenida">Rua/avenida</string>
+    <string name="n_mero">Número</string>
+    <string name="complemento">Complemento</string>
+    <string name="cidade">Cidade</string>
+    <string name="estado">Estado</string>
 </resources>
