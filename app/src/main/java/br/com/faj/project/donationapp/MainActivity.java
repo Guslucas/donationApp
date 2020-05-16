@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         .show();
 
         // Código usado para testes
-        Intent i = new Intent(this, Campaigns.class);
+        Intent i = new Intent(this, Products.class);
         startActivity(i);
 
     }

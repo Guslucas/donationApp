@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".MoneyDonation"></activity>
+        <activity android:name=".Products"></activity>  
         <activity
             android:name=".Campaigns"
             android:label="@string/title_activity_campaign"
