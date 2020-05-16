@@ -14,4 +14,13 @@
     <string name="estado">Estado</string>
     <string name="title_activity_campaigns">Campaigns</string>
     <string name="title_activity_campaign">Campaign</string>
+    <string name="data_de_nascimento">Data de Nascimento</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="nome">Nome</string>
+    <string name="cpf">CPF</string>
+    <string name="fisica">Física</string>
+    <string name="razao_social">Razão Social</string>
+    <string name="cnpj">CNPJ</string>
+    <string name="data_de_fundacao">Data de Fundação</string>
+    <string name="juridica">Júridica</string>
 </resources>
