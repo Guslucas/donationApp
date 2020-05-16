@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(v, loginET.getText().toString() + ", você está logado!", BaseTransientBottomBar.LENGTH_SHORT)
         .show();
 
-        //Intent i = new Intent(this, .class);
+        // Código usado para testes
+        Intent i = new Intent(this, Campaigns.class);
+        startActivity(i);
 
     }
 

@@ -12,4 +12,6 @@
     <string name="complemento">Complemento</string>
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
+    <string name="title_activity_campaigns">Campaigns</string>
+    <string name="title_activity_campaign">Campaign</string>
 </resources>
