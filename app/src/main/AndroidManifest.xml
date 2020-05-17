@@ -10,12 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".MoneyDonation"></activity>
-        <activity android:name=".Products"></activity>  
+        <activity android:name=".Cadastro"></activity>
+        <activity android:name=".Products"></activity>
         <activity
             android:name=".Campaigns"
             android:label="@string/title_activity_campaign"
             android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

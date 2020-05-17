@@ -47,8 +47,8 @@ public class Products extends AppCompatActivity implements DonateMoney {
     }
 
     public void checkoutMoney() {
-        //Intent i = new Intent(this, MoneyDonation.class);
-        //startActivity(i);
+        Intent i = new Intent(this, MoneyDonation.class);
+        startActivity(i);
     }
 
 }

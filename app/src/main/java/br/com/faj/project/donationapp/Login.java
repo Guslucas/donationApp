@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                setContentView(R.layout.activity_main);
+                setContentView(R.layout.login);
             }
         }, 2000);*/
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
     }
 
     public void login(View v) {
@@ -36,12 +35,13 @@ public class MainActivity extends AppCompatActivity {
         .show();
 
         // Código usado para testes
-        Intent i = new Intent(this, Products.class);
+        Intent i = new Intent(this, Campaigns.class);
         startActivity(i);
 
     }
 
     public void signIn(View view) {
-        //Intent i = new Intent(this, .class);
+        Intent i = new Intent(this, Cadastro.class);
+        startActivity(i);
     }
 }

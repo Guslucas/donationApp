@@ -4,34 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Login">
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="33dp"
-        android:text="@string/cadastro"
+        android:layout_marginTop="32dp"
+        android:text="@string/endereco"
         android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/loginInputLayout"
+        android:id="@+id/cepInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="125dp"
         android:layout_marginEnd="50dp"
-        android:hint="@string/login"
+        android:hint="@string/cep"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/loginEditText"
+            android:id="@+id/cepEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -40,21 +40,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailInputLayout"
+        android:id="@+id/bairroInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:hint="@string/email"
+        android:hint="@string/bairro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/cepInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailEditText"
+            android:id="@+id/bairroEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -63,21 +63,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/telefoneInputLayout"
+        android:id="@+id/rua_avenidaText"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:hint="@string/telefone"
+        android:hint="@string/rua_avenida"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/bairroInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/telefoneEditText"
+            android:id="@+id/rua_avenidaEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -85,64 +85,92 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/spinnerJuridicaFisica"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp"
-        android:entries="@array/PessoaFisicaJuridica"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telefoneInputLayout" />
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/senhaInputLayout"
+        android:id="@+id/numeroInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:hint="@string/senha"
+        android:hint="@string/n_mero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerJuridicaFisica"
-        app:passwordToggleEnabled="true">
+        app:layout_constraintTop_toBottomOf="@+id/rua_avenidaText">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/senhaEditText"
+            android:id="@+id/numeroEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword">
+            android:layout_height="wrap_content">
 
         </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmaSenhaInputLayout"
+        android:id="@+id/complementoInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:hint="@string/confirmar_senha"
+        android:hint="@string/complemento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/senhaInputLayout"
-        app:passwordToggleEnabled="true">
+        app:layout_constraintTop_toBottomOf="@+id/numeroInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirmaSenhaEditText"
+            android:id="@+id/complementoEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            >
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/cidadeInputLayout"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="50dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="50dp"
+    android:hint="@string/cidade"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/complementoInputLayout">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/cidadeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.textfield.TextInputEditText>
+
+</com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/estadoInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:hint="@string/estado"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cidadeInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/estadoEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         </com.google.android.material.textfield.TextInputEditText>
 
