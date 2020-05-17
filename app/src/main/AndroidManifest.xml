@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.faj.project.donationapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MoneyDonation"></activity>
-        <activity android:name=".Cadastro"></activity>
-        <activity android:name=".Products"></activity>
+        <activity android:name=".AddressCadastro"></activity>
+        <activity android:name=".MoneyDonation" />
+        <activity android:name=".Cadastro" />
+        <activity android:name=".Products" />
         <activity
             android:name=".Campaigns"
             android:label="@string/title_activity_campaign"
