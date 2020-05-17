@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class productQtd extends AppCompatActivity {
+public class ProductQtd extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
