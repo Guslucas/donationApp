@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MoneyDonation"></activity>
-        <activity android:name=".Cadastro"></activity>
-        <activity android:name=".Products"></activity>
+        <activity android:name=".productQtd"></activity>
+        <activity android:name=".MoneyDonation" />
+        <activity android:name=".Cadastro" />
+        <activity android:name=".Products" />
+        <activity android:name=".BankInformation" />
         <activity
             android:name=".Campaigns"
             android:label="@string/title_activity_campaign"

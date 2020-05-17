@@ -18,10 +18,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonBoleto"
+        android:id="@+id/buttonTransferir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gerar_boleto"
+        android:onClick="transferir"
+        android:text="Transferir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,15 +31,15 @@
         app:textAllCaps="false" />
 
     <Button
-        android:id="@+id/buttonTransferir"
+        android:id="@+id/buttonBoleto"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/transferir"
+        android:text="Gerar Boleto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBoleto"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTransferir"
         app:layout_constraintVertical_bias="0.053"
         app:textAllCaps="false" />
 
