@@ -3,19 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Login">
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="33dp"
-        android:text="@string/fisica"
-        android:textSize="50sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cpfInputLayout"
@@ -23,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="150dp"
         android:layout_marginEnd="50dp"
         android:hint="@string/cpf"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,9 +19,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cpfEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cpfEditText">
+            android:layout_height="wrap_content">
 
         </com.google.android.material.textfield.TextInputEditText>
 
@@ -54,9 +42,9 @@
         app:layout_constraintTop_toBottomOf="@+id/cpfInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nomeEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nomeEditText">
+            android:layout_height="wrap_content">
 
         </com.google.android.material.textfield.TextInputEditText>
 
@@ -77,9 +65,9 @@
         app:layout_constraintTop_toBottomOf="@+id/nomeInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/sobrenomeEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sobrenomeEditText">
+            android:layout_height="wrap_content">
 
         </com.google.android.material.textfield.TextInputEditText>
 
@@ -100,9 +88,9 @@
         app:layout_constraintTop_toBottomOf="@+id/sobrenomeInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dataNascimentoEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dataNascimentoEditText">
+            android:layout_height="wrap_content">
 
         </com.google.android.material.textfield.TextInputEditText>
 

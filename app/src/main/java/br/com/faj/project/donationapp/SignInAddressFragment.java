@@ -1,12 +1,18 @@
 package br.com.faj.project.donationapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.animation.FloatArrayEvaluator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -22,7 +28,7 @@ import org.json.JSONTokener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class AddressCadastro extends AppCompatActivity {
+public class SignInAddressFragment extends Fragment {
 
     EditText cepET;
     EditText cidadeET;
@@ -33,15 +39,20 @@ public class AddressCadastro extends AppCompatActivity {
     private Timer timer = new Timer();
     private final long DELAY = 500;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastro_address);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.cadastro_address, container, false);
+    }
 
-        requestQueue = Volley.newRequestQueue(this);
-        cepET = findViewById(R.id.cepEditText);
-        cidadeET = findViewById(R.id.cidadeEditText);
-        estadoET = findViewById(R.id.estadoEditText);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        requestQueue = Volley.newRequestQueue(this.getContext());
+        cepET = view.findViewById(R.id.cepEditText);
+        cidadeET = view.findViewById(R.id.cidadeEditText);
+        estadoET = view.findViewById(R.id.estadoEditText);
 
         cepET.addTextChangedListener(new TextWatcher() {
             @Override

@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
 
     public void signIn(View view) {
         //Intent i = new Intent(this, Cadastro.class);
-        Intent i = new Intent(this, AddressCadastro.class);
+        Intent i = new Intent(this, Cadastro.class);
         startActivity(i);
     }
 }

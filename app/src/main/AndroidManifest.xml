@@ -17,7 +17,7 @@
         <activity android:name=".Cadastro" />
         <activity android:name=".Products" />
         <activity android:name=".BankInformation" />
-        <activity android:name=".AddressCadastro"></activity>
+        <activity android:name=".SignInAddressFragment"></activity>
         <activity
             android:name=".Campaigns"
             android:label="@string/title_activity_campaign"
