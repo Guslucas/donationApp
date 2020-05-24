@@ -15,7 +15,7 @@ public class SignInPersonFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.cadastro_person, container, false);
+        return inflater.inflate(R.layout.fragment_signin_person, container, false);
     }
 
     @Override

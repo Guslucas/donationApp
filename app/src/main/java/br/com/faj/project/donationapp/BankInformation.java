@@ -11,7 +11,7 @@ public class BankInformation extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bank_information);
+        setContentView(R.layout.activity_bank_information);
     }
 
     public void finalizar (View v){

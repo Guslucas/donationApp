@@ -16,7 +16,7 @@
         <activity android:name=".BankBill"></activity>
         <activity android:name=".ProductQtd" />
         <activity android:name=".MoneyDonation" />
-        <activity android:name=".Cadastro" />
+        <activity android:name=".SignIn" />
         <activity android:name=".Products" />
         <activity android:name=".BankInformation" />
         <activity android:name=".SignInAddressFragment" />

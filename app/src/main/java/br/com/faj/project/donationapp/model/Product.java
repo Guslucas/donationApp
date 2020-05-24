@@ -1,8 +1,8 @@
-package br.com.faj.project.donationapp;
+package br.com.faj.project.donationapp.model;
 
 import android.graphics.Bitmap;
 
-class Product {
+public class Product {
     private String name;
     private String description;
     private Bitmap image;

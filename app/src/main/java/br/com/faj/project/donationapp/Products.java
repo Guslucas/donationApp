@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.faj.project.donationapp.model.Product;
+
 public class Products extends AppCompatActivity implements DonateMoney {
 
     List<Product> mProductList = new ArrayList<Product>();

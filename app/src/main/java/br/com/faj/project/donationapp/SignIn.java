@@ -13,12 +13,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-public class Cadastro extends AppCompatActivity {
+import br.com.faj.project.donationapp.model.DonatorType;
+
+public class SignIn extends AppCompatActivity {
 
     TextView titleTV;
 
@@ -33,7 +32,7 @@ public class Cadastro extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastro);
+        setContentView(R.layout.activity_signin);
 
         SignInBasicInfoFragment basicInfo = new SignInBasicInfoFragment();
         SignInPersonFragment person = new SignInPersonFragment();
@@ -114,7 +113,7 @@ public class Cadastro extends AppCompatActivity {
         Intent i = new Intent(this, Campaigns.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
-        ActivityCompat.finishAffinity(Cadastro.this);
+        ActivityCompat.finishAffinity(SignIn.this);
     }
 }
 

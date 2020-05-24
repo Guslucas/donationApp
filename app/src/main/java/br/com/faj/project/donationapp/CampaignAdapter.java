@@ -10,10 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.List;
+
+import br.com.faj.project.donationapp.model.Campaign;
 
 class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.CampaignItemHolder> {
 

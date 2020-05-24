@@ -11,7 +11,7 @@ public class MoneyDonation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.money_donation);
+        setContentView(R.layout.activity_money_donation);
     }
 
     public void transferir(View v){

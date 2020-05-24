@@ -1,4 +1,4 @@
-package br.com.faj.project.donationapp;
+package br.com.faj.project.donationapp.model;
 
 import android.graphics.Bitmap;
 

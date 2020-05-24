@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,8 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.lang.reflect.Method;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 public class Login extends AppCompatActivity {
@@ -222,7 +219,7 @@ public class Login extends AppCompatActivity {
 
     public void signIn(View view) {
         //Intent i = new Intent(this, Cadastro.class);
-        Intent i = new Intent(this, Cadastro.class);
+        Intent i = new Intent(this, SignIn.class);
         startActivity(i);
     }
 }
