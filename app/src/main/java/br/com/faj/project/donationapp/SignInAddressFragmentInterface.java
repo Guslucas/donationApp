@@ -25,7 +25,7 @@ import org.json.JSONTokener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SignInAddressFragment extends Fragment {
+public class SignInAddressFragmentInterface extends Fragment implements SignInFormInterface {
 
     EditText cepET;
     EditText cidadeET;
@@ -103,5 +103,10 @@ public class SignInAddressFragment extends Fragment {
             }
         }, null);
         requestQueue.add(cepRequest);
+    }
+
+    @Override
+    public boolean validate() {
+        return false;
     }
 }

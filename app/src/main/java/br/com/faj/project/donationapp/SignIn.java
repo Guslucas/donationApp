@@ -34,22 +34,21 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        SignInBasicInfoFragment basicInfo = new SignInBasicInfoFragment();
-        SignInPersonFragment person = new SignInPersonFragment();
-        SignInCompanyFragment company = new SignInCompanyFragment();
-        SignInAddressFragment address = new SignInAddressFragment();
+        SignInBasicInfoFragmentInterface basicInfo = new SignInBasicInfoFragmentInterface();
+        SignInPersonFragmentInterface person = new SignInPersonFragmentInterface();
+        SignInCompanyFragmentInterface company = new SignInCompanyFragmentInterface();
+        SignInAddressFragmentInterface address = new SignInAddressFragmentInterface();
 
-        titulos.add("Info Básica");
+        titulos.add("Informações Básicas");
         telas.add(basicInfo);
-        titulos.add("Pessoa");
+        titulos.add("Pessoa Física");
         telas.add(person);
-        titulos.add("Empresa");
+        titulos.add("Pessoa Jurídica");
         telas.add(company);
         titulos.add("Endereço");
         telas.add(address);
 
         titleTV = findViewById(R.id.titleTV);
-
         titleTV.setText((String) titulos.get(telaAtual));
 
         FragmentManager fm = getSupportFragmentManager();
@@ -83,16 +82,23 @@ public class SignIn extends AppCompatActivity {
     }
 
     public void next(View view) {
+
+        SignInFormInterface telaAtual = (SignInFormInterface) telas.get(this.telaAtual);
+
+        if (!telaAtual.validate()) {
+            return;
+        }
+
         int proximaTela = 0;
-        if (telaAtual == 0) {
-            SignInBasicInfoFragment basicInfo = (SignInBasicInfoFragment) telas.get(0);
+        if (this.telaAtual == 0) {
+            SignInBasicInfoFragmentInterface basicInfo = (SignInBasicInfoFragmentInterface) telas.get(0);
             type = basicInfo.getType();
             if (type.equals(DonatorType.PERSON)) {
                 proximaTela = 1;
             }else if (type.equals(DonatorType.COMPANY)) {
                 proximaTela = 2;
             }
-        } else if (telaAtual == telas.size() - 1) {
+        } else if (this.telaAtual == telas.size() - 1) {
             goToCampaigns();
             return;
         } else {
@@ -105,7 +111,7 @@ public class SignIn extends AppCompatActivity {
         ft.commit();
 
         titleTV.setText(titulos.get(proximaTela));
-        telaAtual = proximaTela;
+        this.telaAtual = proximaTela;
 
     }
 
