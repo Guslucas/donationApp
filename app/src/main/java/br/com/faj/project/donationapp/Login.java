@@ -52,11 +52,11 @@ public class Login extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                setContentView(R.layout.login);
+                setContentView(R.layout.activity_login);
             }
         }, 2000);*/
 
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
 
         loginIL = findViewById(R.id.loginInputLayout);
         passwordIL = findViewById(R.id.passwordInputLayout);
@@ -115,7 +115,7 @@ public class Login extends AppCompatActivity {
 
     private void verifyPreviousLogin() {
 
-        String login = loginInfoSP.getString("login", null);
+        String login = loginInfoSP.getString("activity_login", null);
         String password = loginInfoSP.getString("password", null);
 
         if (login != null && password != null) {
@@ -125,7 +125,7 @@ public class Login extends AppCompatActivity {
 
     private void loginServer(final String login, final String password) {
         String url = getResources().getString(R.string.url);
-        url += "/login";
+        url += "/activity_login";
         Log.i("URL sendo usada", url);
 
         StringRequest loginRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

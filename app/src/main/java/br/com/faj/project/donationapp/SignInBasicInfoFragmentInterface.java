@@ -13,32 +13,35 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import br.com.faj.project.donationapp.model.Company;
+import br.com.faj.project.donationapp.model.Donator;
 import br.com.faj.project.donationapp.model.DonatorType;
+import br.com.faj.project.donationapp.model.Person;
 
 
 public class SignInBasicInfoFragmentInterface extends Fragment implements SignInFormInterface {
 
-    EditText emailET;
-    EditText telefoneET;
-    EditText senhaET;
-    EditText confirmaSenhaET;
-    TextInputLayout emailIL;
-    TextInputLayout senhaIL;
-    TextInputLayout telefoneIL;
-    TextInputLayout confirmaSenhaIL;
+    private EditText emailET;
+    private EditText bioET;
+    private EditText senhaET;
+    private EditText confirmaSenhaET;
+    private TextInputLayout emailIL;
+    private TextInputLayout senhaIL;
+    private TextInputLayout bioIL;
+    private TextInputLayout confirmaSenhaIL;
 
-    Spinner typeSpinner;
+    private Spinner typeSpinner;
 
 
     private void loadUI(View view) {
 
         emailET = view.findViewById(R.id.emailEditText);
-        telefoneET = view.findViewById(R.id.telefoneEditText);
+        bioET = view.findViewById(R.id.bioEditText);
         senhaET = view.findViewById(R.id.senhaEditText);
         confirmaSenhaET = view.findViewById(R.id.confirmaSenhaEditText);
         emailIL = view.findViewById(R.id.emailInputLayout);
         senhaIL = view.findViewById(R.id.senhaInputLayout);
-        telefoneIL = view.findViewById(R.id.telefoneInputLayout);
+        bioIL = view.findViewById(R.id.bioInputLayout);
         confirmaSenhaIL = view.findViewById(R.id.confirmaSenhaInputLayout);
 
 
@@ -71,12 +74,29 @@ public class SignInBasicInfoFragmentInterface extends Fragment implements SignIn
         boolean isValid = true;
 
         if (!(ValidateEditText.validateEditText(emailIL, emailET) &
-                ValidateEditText.validateEditText(telefoneIL, telefoneET) &
+                ValidateEditText.validateEditText(bioIL, bioET) &
                 ValidateEditText.validatePassword(senhaIL, senhaET, confirmaSenhaIL, confirmaSenhaET))) {
             isValid = false;
         }
 
         return isValid;
+    }
+
+    @Override
+    public Donator extract(Donator d) {
+
+        String email = emailET.getText().toString();
+        String bio = bioET.getText().toString();
+        String senha = senhaET.getText().toString();
+
+        DonatorType tipo = getType();
+
+        if (tipo.equals(DonatorType.PERSON)) {
+            d = new Person(email, senha, bio);
+        } else if (tipo.equals(DonatorType.COMPANY)) {
+            d = new Company(email, senha, bio);
+        }
+        return d;
     }
 
     @Override

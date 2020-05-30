@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,13 +26,30 @@ import org.json.JSONTokener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import br.com.faj.project.donationapp.model.Address;
+import br.com.faj.project.donationapp.model.Donator;
+
 public class SignInAddressFragmentInterface extends Fragment implements SignInFormInterface {
 
-    EditText cepET;
-    EditText cidadeET;
-    EditText estadoET;
+    private TextInputLayout cepIL;
+    private TextInputLayout bairroIL;
+    private TextInputLayout ruaAvenidaIL;
+    private TextInputLayout numeroIL;
+    private TextInputLayout complementoIL;
+    private TextInputLayout cidadeIL;
+    private TextInputLayout estadoIL;
 
-    RequestQueue requestQueue;
+    private EditText cepET;
+    private EditText bairroET;
+    private EditText ruaAvenidaET;
+    private EditText numeroET;
+    private EditText complementoET;
+    private EditText cidadeET;
+    private EditText estadoET;
+
+
+
+    private RequestQueue requestQueue;
 
     private Timer timer = new Timer();
     private final long DELAY = 500;
@@ -47,9 +65,7 @@ public class SignInAddressFragmentInterface extends Fragment implements SignInFo
         super.onViewCreated(view, savedInstanceState);
 
         requestQueue = Volley.newRequestQueue(this.getContext());
-        cepET = view.findViewById(R.id.cepEditText);
-        cidadeET = view.findViewById(R.id.cidadeEditText);
-        estadoET = view.findViewById(R.id.estadoEditText);
+        loadUI(view);
 
         cepET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,12 +99,34 @@ public class SignInAddressFragmentInterface extends Fragment implements SignInFo
         });
     }
 
-    public void getInfoCep(String cep) {
+
+    private void loadUI(View view) {
+
+        cepET = view.findViewById(R.id.cepEditText);
+        bairroET = view.findViewById(R.id.bairroEditText);
+        ruaAvenidaET = view.findViewById(R.id.ruaAvenidaEditText);
+        numeroET = view.findViewById(R.id.numeroEditText);
+        complementoET = view.findViewById(R.id.complementoEditText);
+        cidadeET = view.findViewById(R.id.cidadeEditText);
+        estadoET = view.findViewById(R.id.estadoEditText);
+
+        cepIL = view.findViewById(R.id.cepInputLayout);
+        bairroIL = view.findViewById(R.id.bairroInputLayout);
+        ruaAvenidaIL = view.findViewById(R.id.ruaAvenidaInputLayout);
+        numeroIL = view.findViewById(R.id.numeroInputLayout);
+        complementoIL = view.findViewById(R.id.complementoInputLayout);
+        cidadeIL = view.findViewById(R.id.cidadeInputLayout);
+        estadoIL = view.findViewById(R.id.estadoInputLayout);
+
+
+    }
+
+    private void getInfoCep(String cep) {
         String url = "https://viacep.com.br/ws/" + cep + "/json/";
         StringRequest cepRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                JSONObject info = null;
+                JSONObject info;
                 try {
                     info = (JSONObject) new JSONTokener(response).nextValue();
                     if (!info.has("erro")) {
@@ -107,6 +145,24 @@ public class SignInAddressFragmentInterface extends Fragment implements SignInFo
 
     @Override
     public boolean validate() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public Donator extract(Donator d) {
+
+        String ruaAvenida = ruaAvenidaET.getText().toString();
+        String numero = numeroET.getText().toString();
+        String complemento = complementoET.getText().toString();
+        String bairro = bairroET.getText().toString();
+        String cidade = cidadeET.getText().toString();
+        String cep = cepET.getText().toString();
+        String estado = estadoET.getText().toString();
+
+        Address a = new Address(ruaAvenida, numero, complemento, bairro, cidade, cep, estado);
+
+        d.setAddress(a);
+
+        return d;
     }
 }

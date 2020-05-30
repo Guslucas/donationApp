@@ -22,31 +22,32 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress">
 
         </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/telefoneInputLayout"
+        android:id="@+id/bioInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:hint="@string/telefone"
+        android:hint="@string/bio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/telefoneEditText"
+            android:id="@+id/bioEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone">
+            android:inputType="textShortMessage">
 
         </com.google.android.material.textfield.TextInputEditText>
 
@@ -62,7 +63,7 @@
         android:entries="@array/PessoaFisicaJuridica"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telefoneInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/bioInputLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/senhaInputLayout"

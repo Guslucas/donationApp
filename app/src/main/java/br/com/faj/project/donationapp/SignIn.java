@@ -15,7 +15,10 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.faj.project.donationapp.model.Company;
+import br.com.faj.project.donationapp.model.Donator;
 import br.com.faj.project.donationapp.model.DonatorType;
+import br.com.faj.project.donationapp.model.Person;
 
 public class SignIn extends AppCompatActivity {
 
@@ -26,7 +29,6 @@ public class SignIn extends AppCompatActivity {
     DonatorType type;
 
     int telaAtual = 0;
-
 
 
     @Override
@@ -99,6 +101,27 @@ public class SignIn extends AppCompatActivity {
                 proximaTela = 2;
             }
         } else if (this.telaAtual == telas.size() - 1) {
+
+            System.out.println("Gerando usuário...");
+
+            Donator d = null;
+
+            SignInFormInterface basicInfo = (SignInFormInterface) telas.get(0);
+            d = basicInfo.extract(d);
+
+            if (d instanceof Person) {
+                SignInFormInterface personInfo = (SignInFormInterface) telas.get(1);
+                d = personInfo.extract(d);
+            } else if (d instanceof Company) {
+                SignInFormInterface companyInfo = (SignInFormInterface) telas.get(2);
+                d = companyInfo.extract(d);
+            }
+
+            SignInFormInterface addressInfo = (SignInFormInterface) telas.get(3);
+            d = addressInfo.extract(d);
+
+            System.out.println(d.toString());
+
             goToCampaigns();
             return;
         } else {
