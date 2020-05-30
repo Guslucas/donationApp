@@ -63,7 +63,15 @@ public class SignInPersonFragmentInterface extends Fragment implements SignInFor
 
     @Override
     public boolean validate() {
-        return true;
+        boolean isValid = true;
+
+        if (!(ValidateEditText.validateEditText(cpfIL, cpfET) &
+                ValidateEditText.validateEditText(nomeIL, nomeET) &
+                ValidateEditText.validateEditText(sobrenomeIL,sobrenomeET)&
+                ValidateEditText.validateEditText(dataNascimentoIL, dataNascimentoET))) {
+            isValid = false;
+        }
+        return isValid;
     }
 
     @Override

@@ -145,7 +145,19 @@ public class SignInAddressFragmentInterface extends Fragment implements SignInFo
 
     @Override
     public boolean validate() {
-        return true;
+        boolean isValid = true;
+
+        if (!(ValidateEditText.validateEditText(ruaAvenidaIL, ruaAvenidaET) &
+                ValidateEditText.validateNumber(numeroIL, numeroET) &
+                ValidateEditText.validateEditText(complementoIL,complementoET)&
+                ValidateEditText.validateEditText(bairroIL, bairroET) &
+                ValidateEditText.validateEditText(cidadeIL, cidadeET) &
+                ValidateEditText.validateEditText(cepIL, cepET) &
+                ValidateEditText.validateEditText(estadoIL, estadoET))) {
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     @Override
