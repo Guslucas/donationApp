@@ -10,7 +10,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +28,8 @@ public class Products extends AppCompatActivity implements DonateMoney {
     List<Product> mProductList = new ArrayList<Product>();
     RecyclerView mProductRecycler;
     ProductAdapter mProductAdapter;
+
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,7 @@ public class Products extends AppCompatActivity implements DonateMoney {
 
         mProductRecycler.setAdapter(mProductAdapter);
 
+        queue = Volley.newRequestQueue(this);
 
     }
 
@@ -46,6 +55,16 @@ public class Products extends AppCompatActivity implements DonateMoney {
         Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
         mProductList.add(new Product("Money", "We need it.", night, ""));
         mProductList.add(new Product("Milk", "We accept.", night, "1L"));
+
+        /*String url = getResources().getString(R.string.url);
+        url += "/campaigns"; //TODO alterar para In
+        Log.i("URL sendo usada", url);
+
+        StringRequest requestCampaigns = new StringRequest(Request.Method.GET, url, null, null);
+
+        queue.add(requestCampaigns);*/
+
+
     }
 
     public void checkoutMoney() {

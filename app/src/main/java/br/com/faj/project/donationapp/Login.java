@@ -125,28 +125,18 @@ public class Login extends AppCompatActivity {
 
     private void loginServer(final String login, final String password) {
         String url = getResources().getString(R.string.url);
-        url += "/activity_login";
+        url += "/login";
         Log.i("URL sendo usada", url);
 
         StringRequest loginRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                    JSONObject pessoa = null;
-                try {
-                    pessoa = (JSONObject) (new JSONTokener(response)).nextValue();
-                } catch (JSONException e) {
-                    showError(e);
-                }
-                if (pessoa != null && pessoa.has("id")) {
-                    loginSuccess();
-                } else {
-                    showError("Login ou senha inválidos");
-                }
+                 responseLogIn(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Snackbar.make(loginLayout, "Ocorreu um erro inseperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
+                showError(error);
             }
         }) {
             @Override
@@ -172,6 +162,22 @@ public class Login extends AppCompatActivity {
         queue.add(loginRequest);
     }
 
+    private void responseLogIn(String response) {
+        System.out.println(response);
+        JSONObject pessoa = null;
+        try {
+            pessoa = (JSONObject) (new JSONTokener(response)).nextValue();
+
+            if (pessoa != null && pessoa.has("id")) {
+                loginSuccess();
+            } else {
+                showError("Login ou senha inválidos");
+            }
+        } catch (JSONException e) {
+            showError(e);
+        }
+    }
+
     private void loginSuccess() {
         // Código usado para testes
         Intent i = new Intent(this, Campaigns.class);
@@ -194,6 +200,9 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View v) {
+
+        //TODO TRAVA APENAS PARA TESTES
+        loginSuccess();
 
         boolean error = false;
 

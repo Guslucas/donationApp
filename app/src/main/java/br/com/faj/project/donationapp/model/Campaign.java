@@ -2,23 +2,31 @@ package br.com.faj.project.donationapp.model;
 
 import android.graphics.Bitmap;
 
-public class Campaign {
+import java.util.Date;
+
+public abstract class Campaign {
+    private long id;
     private String name;
     private String description;
+    private Date startDate;
+    private Date endDate;
+    private float percentage;
     private Bitmap image;
-    private int percentage;
 
-    public Campaign(String nome, String description) {
-        this.name = nome;
+    public Campaign(long id, String name, String description, Date startDate, Date endDate, float percentage) {
+        this.id = id;
+        this.name = name;
         this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.percentage = percentage;
     }
 
-    public Campaign(String nome, String description, Bitmap image, int porcentagemConclusao) {
-        this.name = nome;
-        this.description = description;
-        this.image = image;
-        if (porcentagemConclusao < 0 || porcentagemConclusao > 100) throw new IllegalArgumentException("Porcentagem inválida.");
-        this.percentage = porcentagemConclusao;
+    public Campaign(String name, String description, Date startDate, Date endDate) {
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -29,11 +37,19 @@ public class Campaign {
         return description;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public int getPercentage() {
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public float getPercentage() {
         return percentage;
+    }
+
+    public Bitmap getImage() {
+        return image;
     }
 }

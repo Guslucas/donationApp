@@ -1,15 +1,17 @@
 package br.com.faj.project.donationapp.model;
 
-import androidx.annotation.NonNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Person extends Donator {
 
-    String cpf;
-    String name;
-    String surname;
-    Date birthDate;
+    private String cpf;
+    private String name;
+    private String surname;
+    private Date birthDate;
 
     public Person(long id, String email, String password, String bio, Address address, String cpf, String name, String surname, Date birthDate) {
         super(id, email, password, bio, address);
@@ -55,4 +57,16 @@ public class Person extends Donator {
         this.birthDate = birthDate;
     }
 
+    @Override
+    public JSONObject toJSON() throws JSONException {
+        JSONObject jsonObject = super.toJSON();
+        jsonObject.put("cpf", cpf);
+        jsonObject.put("name", name);
+        jsonObject.put("surname", surname);
+        jsonObject.put("birthDate", new SimpleDateFormat("yyyy-MM-dd").format(birthDate));
+
+        jsonObject.put("type", "Person");
+
+        return jsonObject;
+    }
 }

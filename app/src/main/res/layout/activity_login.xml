@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginInputLayout"
 
         app:passwordToggleEnabled="true"
-
+        app:errorEnabled="true"
 
         >
 

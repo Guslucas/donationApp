@@ -37,7 +37,7 @@ class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.CampaignItemH
         holder.mName.setText(campaign.getName());
         holder.mDescription.setText(campaign.getDescription());
         holder.mImage.setImageBitmap(campaign.getImage());
-        holder.mProgressBar.setProgress(campaign.getPercentage());
+        holder.mProgressBar.setProgress(Math.round(campaign.getPercentage()));
     }
 
     @Override

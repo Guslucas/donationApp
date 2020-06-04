@@ -2,16 +2,34 @@ package br.com.faj.project.donationapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +47,10 @@ public class SignIn extends AppCompatActivity {
     DonatorType type;
 
     int telaAtual = 0;
+
+    RequestQueue queue;
+
+    ConstraintLayout constraintLayout;
 
 
     @Override
@@ -51,12 +73,16 @@ public class SignIn extends AppCompatActivity {
         telas.add(address);
 
         titleTV = findViewById(R.id.titleTV);
-        titleTV.setText((String) titulos.get(telaAtual));
+        titleTV.setText(titulos.get(telaAtual));
+
+        constraintLayout = findViewById(R.id.constraintLayout);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frameLayout, telas.get(telaAtual));
         ft.commit();
+
+        queue = Volley.newRequestQueue(this);
 
     }
 
@@ -68,7 +94,7 @@ public class SignIn extends AppCompatActivity {
         } else if (telaAtual == telas.size() - 1) {
             if (type.equals(DonatorType.PERSON)) {
                 proximaTela = 1;
-            }else if (type.equals(DonatorType.COMPANY)) {
+            } else if (type.equals(DonatorType.COMPANY)) {
                 proximaTela = 2;
             }
         } else {
@@ -97,7 +123,7 @@ public class SignIn extends AppCompatActivity {
             type = basicInfo.getType();
             if (type.equals(DonatorType.PERSON)) {
                 proximaTela = 1;
-            }else if (type.equals(DonatorType.COMPANY)) {
+            } else if (type.equals(DonatorType.COMPANY)) {
                 proximaTela = 2;
             }
         } else if (this.telaAtual == telas.size() - 1) {
@@ -120,9 +146,8 @@ public class SignIn extends AppCompatActivity {
             SignInFormInterface addressInfo = (SignInFormInterface) telas.get(3);
             d = addressInfo.extract(d);
 
-            System.out.println(d.toString());
+            signIn(d);
 
-            goToCampaigns();
             return;
         } else {
             proximaTela = 3;
@@ -138,11 +163,86 @@ public class SignIn extends AppCompatActivity {
 
     }
 
+    private void signIn(Donator d) {
+
+        String url = getResources().getString(R.string.url);
+        url += "/signin"; //TODO alterar para In
+        Log.i("URL sendo usada", url);
+
+        String donator = null;
+        try {
+            donator = d.toJSON().toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final String finalDonator = donator;
+        StringRequest signInRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                responseSignIn(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                showError(error);
+            }
+        }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return finalDonator.getBytes(StandardCharsets.UTF_8);
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+        };
+
+        queue.add(signInRequest);
+    }
+
+    private void responseSignIn(String response) {
+        try {
+            System.out.println(response);
+            JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
+            if (!jsonObject.getString("status").equalsIgnoreCase("OK")) { //TODO
+                showError(jsonObject.getString("errorMessage"));
+                return;
+            }
+
+            JSONObject object = jsonObject.getJSONObject("object");
+            if (object.has("cpf")) {
+                Toast.makeText(this, "É uma pessoa.", Toast.LENGTH_SHORT).show();
+                //TODO gravar info da "sessão"
+
+            }else if (object.has("cnpj")) {
+                Toast.makeText(this, "É uma empresa.", Toast.LENGTH_SHORT).show();
+                //TODO gravar info da "sessão"
+            } else {
+                return;
+            }
+
+            goToCampaigns();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void goToCampaigns() {
         Intent i = new Intent(this, Campaigns.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         ActivityCompat.finishAffinity(SignIn.this);
+    }
+
+    private void showError(Exception e) {
+        Snackbar.make(constraintLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
+        e.printStackTrace();
+    }
+
+    private void showError(String e) {
+        Snackbar.make(constraintLayout, e, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 }
 

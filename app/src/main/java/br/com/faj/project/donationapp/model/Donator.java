@@ -1,11 +1,14 @@
 package br.com.faj.project.donationapp.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public abstract class Donator {
-    long id;
-    String email;
-    String password;
-    String bio;
-    Address address;
+    private long id;
+    private String email;
+    private String password;
+    private String bio;
+    private Address address;
 
     public Donator(long id, String email, String password, String bio, Address address) {
         this.id = id;
@@ -19,7 +22,6 @@ public abstract class Donator {
         this.email = email;
         this.password = password;
         this.bio = bio;
-        this.address = address;
     }
 
     public long getId() {
@@ -48,5 +50,16 @@ public abstract class Donator {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public JSONObject toJSON() throws JSONException {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", email);
+        jsonObject.put("password", password);
+        jsonObject.put("bio", bio);
+        jsonObject.put("address", address.toJSON());
+
+        return jsonObject;
     }
 }

@@ -1,14 +1,17 @@
 package br.com.faj.project.donationapp.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Address {
 
-    String street;
-    String number;
-    String complement;
-    String neighborhood;
-    String city;
-    String cep;
-    String state;
+    private String street;
+    private String number;
+    private String complement;
+    private String neighborhood;
+    private String city;
+    private String cep;
+    private String state;
 
     public Address(String street, String number, String complement, String neighborhood, String city, String cep, String state) {
         this.street = street;
@@ -54,5 +57,20 @@ public class Address {
 
     public void getAddress() {
 
+    }
+
+    public JSONObject toJSON() throws JSONException {
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("street", street);
+        jsonObject.put("number", number);
+        jsonObject.put("complement", complement);
+        jsonObject.put("neighborhood", neighborhood);
+        jsonObject.put("city", city);
+        jsonObject.put("cep", cep);
+        jsonObject.put("state", state);
+
+        return jsonObject;
     }
 }
