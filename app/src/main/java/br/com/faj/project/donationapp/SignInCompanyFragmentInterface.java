@@ -61,7 +61,17 @@ public class SignInCompanyFragmentInterface extends Fragment implements SignInFo
 
     @Override
     public boolean validate() {
-        return true;
+        boolean isValid = true;
+
+        if (!(ValidateEditText.validateEditText(cnpjIL, cnpjET) &
+                ValidateEditText.validateEditText(nomeIL, nomeET) &
+                ValidateEditText.validateEditText(razaoSocialIL,razaoSocialET)&
+                ValidateEditText.validateEditText(dataFundacaoIL, dataFundacaoET))){
+            isValid = false;
+        }
+
+
+        return isValid;
     }
 
     @Override

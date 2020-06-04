@@ -16,6 +16,17 @@ public class ValidateEditText {
         return isValid;
     }
 
+    public static boolean validateNumber(TextInputLayout inputLayout, EditText editText){
+        boolean isValid = true;
+        if (editText.getText().toString().trim().isEmpty()) {
+            inputLayout.setError("Inválido.");
+            isValid = false;
+        } else {
+            inputLayout.setError(null);
+        }
+        return isValid;
+    }
+
     public static boolean validatePassword(TextInputLayout til1, EditText et1, TextInputLayout til2, EditText et2) {
         boolean isValid = true;
 
