@@ -131,7 +131,11 @@ public class Login extends AppCompatActivity {
         StringRequest loginRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                 responseLogIn(response);
+                try {
+                    responseLogIn(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
+                } catch (Exception e) {
+                    showError(e);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -151,6 +155,7 @@ public class Login extends AppCompatActivity {
                 try {
                     loginESenha.put("email", login);
                     loginESenha.put("password", password);
+                    loginESenha.put("type", "Person");
                 } catch (JSONException e) {
                     showError(e);
                 }
@@ -162,20 +167,18 @@ public class Login extends AppCompatActivity {
         queue.add(loginRequest);
     }
 
-    private void responseLogIn(String response) {
+    private void responseLogIn(String response) throws JSONException {
         System.out.println(response);
-        JSONObject pessoa = null;
-        try {
-            pessoa = (JSONObject) (new JSONTokener(response)).nextValue();
 
-            if (pessoa != null && pessoa.has("id")) {
-                loginSuccess();
-            } else {
-                showError("Login ou senha inválidos");
-            }
-        } catch (JSONException e) {
-            showError(e);
+        JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
+
+        if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
+            showError(jsonResponse.getString("errorMessage"));
+            return;
         }
+
+        loginSuccess();
+
     }
 
     private void loginSuccess() {
@@ -202,7 +205,7 @@ public class Login extends AppCompatActivity {
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
-        loginSuccess();
+        //loginSuccess();
 
         boolean error = false;
 

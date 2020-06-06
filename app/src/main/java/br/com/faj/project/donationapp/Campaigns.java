@@ -105,7 +105,7 @@ public class Campaigns extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    listCampaigns(response);
+                    listCampaigns(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
                     showError(e);
                 }
