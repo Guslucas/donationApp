@@ -25,6 +25,11 @@ public class Person extends Donator {
         super(email, password, bio);
     }
 
+    //TODO testes, pode tirar dps
+    public Person(long id) {
+        super(id);
+    }
+
     public String getCpf() {
         return cpf;
     }

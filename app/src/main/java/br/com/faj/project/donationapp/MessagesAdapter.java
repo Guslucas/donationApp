@@ -61,6 +61,7 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageItemHo
         //TODO pegar usuário doando
         int my_id = 1;
         Message message = messageList.get(position);
+        System.out.println(message.getSender().getId());
         if (message.getSender().getId() == 1) {
             return MY_MESSAGE;
         } else {
@@ -73,7 +74,7 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageItemHo
 
         public MessageItemHolder(@NonNull View itemView) {
             super(itemView);
-            mMessage = itemView.findViewById(R.id.message);
+            mMessage = itemView.findViewById(R.id.messageVT);
         }
     }
 }

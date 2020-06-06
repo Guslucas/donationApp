@@ -24,6 +24,11 @@ public abstract class Donator {
         this.bio = bio;
     }
 
+    //TODO testes, pode tirar dps
+    public Donator(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

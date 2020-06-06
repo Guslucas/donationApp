@@ -7,6 +7,18 @@
     android:orientation="vertical"
     tools:context=".Messages">
 
+    <EditText
+        android:id="@+id/personET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_recycler"
         android:layout_width="match_parent"
@@ -26,24 +38,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
 
             <EditText
-                android:id="@+id/newMessage"
+                android:id="@+id/newMessageET"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:ems="10"
-                android:inputType="text"
                 android:hint="Digite a mensagem"
+                android:inputType="text"
                 android:paddingHorizontal="10dp"
-                android:text=""/>
+                android:text="" />
 
             <ImageButton
                 android:id="@+id/sendButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="sendMessage"
                 android:padding="13dp"
                 app:srcCompat="@drawable/ic_send_black_24dp" />
 

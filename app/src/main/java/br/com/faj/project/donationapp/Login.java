@@ -151,7 +151,7 @@ public class Login extends AppCompatActivity {
             @Override
             public byte[] getBody() throws AuthFailureError {
 
-                JSONObject loginESenha = new JSONObject();;
+                JSONObject loginESenha = new JSONObject();
                 try {
                     loginESenha.put("email", login);
                     loginESenha.put("password", password);
@@ -211,19 +211,19 @@ public class Login extends AppCompatActivity {
 
         //TODO TRAVA APENAS PARA TESTES
         //loginSuccess();
-        goToMessages();
+        //goToMessages();
 
         boolean error = false;
 
         String login = loginET.getText().toString();
         String password = passwordET.getText().toString();
 
-        if (login.trim().equals("")) {
+        if (login.trim().isEmpty()) {
             loginIL.setError("O campo não pode ser vazio.");
             error = true;
         }
 
-        if (password.trim().equals("")) {
+        if (password.trim().isEmpty()) {
             passwordIL.setError("O campo não pode ser vazio.");
             error = true;
         }
@@ -236,7 +236,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void signIn(View view) {
-        //Intent i = new Intent(this, Cadastro.class);
         Intent i = new Intent(this, SignIn.class);
         startActivity(i);
     }

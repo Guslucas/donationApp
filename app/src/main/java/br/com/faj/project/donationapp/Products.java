@@ -48,7 +48,6 @@ public class Products extends AppCompatActivity implements DonateMoney {
         mProductRecycler.setAdapter(mProductAdapter);
 
         queue = Volley.newRequestQueue(this);
-
     }
 
     private void loadProducts() {

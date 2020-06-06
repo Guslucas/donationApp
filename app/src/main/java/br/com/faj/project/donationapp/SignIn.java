@@ -128,8 +128,6 @@ public class SignIn extends AppCompatActivity {
             }
         } else if (this.telaAtual == telas.size() - 1) {
 
-            System.out.println("Gerando usuário...");
-
             Donator d = null;
 
             SignInFormInterface basicInfo = (SignInFormInterface) telas.get(0);

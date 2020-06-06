@@ -176,9 +176,10 @@ public class Campaigns extends AppCompatActivity {
 
     public void selectCampaign(int adapterPosition) {
         Campaign c = mCampaignList.get(adapterPosition);
+
         //Toast.makeText(getApplicationContext(), "A campanha que você vai doar é " + c.getName(), Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, Products.class);
-        i.putExtra("ID_CAMPAIGN", c.getName());
+        i.putExtra("ID_CAMPAIGN", c.getId());
         startActivity(i);
     }
 
