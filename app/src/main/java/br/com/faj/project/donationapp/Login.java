@@ -202,10 +202,16 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    public void goToMessages() {
+        Intent i = new Intent(this, Messages.class);
+        startActivity(i);
+    }
+
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
         //loginSuccess();
+        goToMessages();
 
         boolean error = false;
 

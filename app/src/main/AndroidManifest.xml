@@ -11,9 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".BankBill"></activity>
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Messages"></activity>
+        <activity android:name=".BankBill" />
         <activity android:name=".ProductQtd" />
         <activity android:name=".MoneyDonation" />
         <activity android:name=".SignIn" />
