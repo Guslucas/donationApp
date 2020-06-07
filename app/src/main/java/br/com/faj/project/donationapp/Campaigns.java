@@ -38,6 +38,7 @@ import java.util.List;
 
 import br.com.faj.project.donationapp.model.Campaign;
 import br.com.faj.project.donationapp.model.MoneyCampaign;
+import br.com.faj.project.donationapp.model.Product;
 import br.com.faj.project.donationapp.model.ProductCampaign;
 
 public class Campaigns extends AppCompatActivity {
@@ -72,12 +73,14 @@ public class Campaigns extends AppCompatActivity {
         mCampaignRecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
         loadCampaigns();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+             // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent i = new Intent (getApplicationContext(), Products.class);
+                startActivity(i);
             }
         });
 
@@ -94,8 +97,8 @@ public class Campaigns extends AppCompatActivity {
 
     private void loadCampaigns() {
         Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
-        //mCampaignList.add(new MoneyCampaign("Calm Nights", "Help us donation this.", new Date(2020, 01, 01), new Date(2020, 04, 01)));
-        //mCampaignList.add(new ProductCampaign("DARK Nights", "Help us donation this.", new Date(2020, 01, 01), new Date(2020, 04, 01)));
+       mCampaignList.add(new MoneyCampaign("Calm Nights", "Help us donation this.", new Date(2020, 01, 01), new Date(2020, 04, 01)));
+       mCampaignList.add(new ProductCampaign("DARK Nights", "Help us donation this.", new Date(2020, 01, 01), new Date(2020, 04, 01)));
 
         String url = getResources().getString(R.string.url);
         url += "/campaign";
@@ -131,10 +134,6 @@ public class Campaigns extends AppCompatActivity {
     }
 
     public void listCampaigns(String response) throws JSONException {
-
-
-        response = "{\"status\":\"OK\", \"errorMessage\":null, \"object\": " + response + "}"; //TODO REMOVER APÓS CORREÇÃO DA API
-        System.out.println(response);
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
@@ -178,9 +177,19 @@ public class Campaigns extends AppCompatActivity {
         Campaign c = mCampaignList.get(adapterPosition);
         //Toast.makeText(getApplicationContext(), "A campanha que você vai doar é " + c.getName(), Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, Products.class);
-        i.putExtra("ID_CAMPAIGN", c.getName());
-        startActivity(i);
+        Intent md = new Intent (this, MoneyDonation.class);
+
+        if(c instanceof MoneyCampaign){
+
+            i.putExtra("ID_CAMPAIGN", c.getId());
+            startActivity(md);
+        }else if(c instanceof ProductCampaign){
+
+            i.putExtra("ID_CAMPAIGN", c.getId());
+            startActivity(i);
+        }
     }
+
 
     private void showError(Exception e) {
         Snackbar.make(campaignsLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();

@@ -63,7 +63,8 @@ class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.CampaignItemH
 
         @Override
         public void onClick(View v) {
-            callingActivity.selectCampaign(getAdapterPosition());
+            callingActivity.
+                    selectCampaign(getAdapterPosition());
         }
     }
 }
