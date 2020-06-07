@@ -220,12 +220,18 @@ public class Login extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void goToBankInformation() {
+        Intent i = new Intent(this, BankInformation.class);
+        startActivity(i);
+    }
+
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
-        //loginSuccess();
+        loginSuccess();
         //goToMessages();
-        goToBarCode();
+        //goToBarCode();
+        //goToBankInformation();
 
         boolean error = false;
 

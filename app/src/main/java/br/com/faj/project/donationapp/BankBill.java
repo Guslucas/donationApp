@@ -21,4 +21,9 @@ public class BankBill extends AppCompatActivity {
         startActivity(i);
         ActivityCompat.finishAffinity(BankBill.this);
     }
+
+    public void finalizar (View v){
+        Intent i = new Intent(this, ProductQtd.class);
+        startActivity(i);
+    }
 }

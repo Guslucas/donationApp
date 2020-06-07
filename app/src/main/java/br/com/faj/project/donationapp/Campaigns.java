@@ -134,7 +134,7 @@ public class Campaigns extends AppCompatActivity {
     public void listCampaigns(String response) throws JSONException {
 
 
-        response = "{\"status\":\"OK\", \"errorMessage\":null, \"object\": " + response + "}"; //TODO REMOVER APÓS CORREÇÃO DA API
+        //response = "{\"status\":\"OK\", \"errorMessage\":null, \"object\": " + response + "}"; //TODO REMOVER APÓS CORREÇÃO DA API
         System.out.println(response);
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
@@ -195,5 +195,6 @@ public class Campaigns extends AppCompatActivity {
 
     private void logOut() {
         //TODO sharedPreferences.Remove user logado
+
     }
 }
