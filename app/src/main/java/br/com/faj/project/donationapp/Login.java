@@ -215,11 +215,17 @@ public class Login extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void goToBarCode() {
+        Intent i = new Intent(this, BarCode.class);
+        startActivity(i);
+    }
+
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
         //loginSuccess();
-        goToMessages();
+        //goToMessages();
+        goToBarCode();
 
         boolean error = false;
 
