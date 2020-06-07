@@ -56,7 +56,6 @@ public class Campaigns extends AppCompatActivity {
         setContentView(R.layout.activity_campaigns);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        VolleyLog.DEBUG = true;
 
         queue = Volley.newRequestQueue(this);
 
@@ -76,6 +75,8 @@ public class Campaigns extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Messages.class);
+                startActivity(i);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -190,5 +191,9 @@ public class Campaigns extends AppCompatActivity {
 
     private void showError(String errorMessage) {
         Snackbar.make(campaignsLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
+    }
+
+    private void logOut() {
+        //TODO sharedPreferences.Remove user logado
     }
 }

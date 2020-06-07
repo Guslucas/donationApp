@@ -109,6 +109,7 @@ public class Login extends AppCompatActivity {
 
         loginInfoSP = getSharedPreferences("loginInfo", MODE_PRIVATE);
         loginInfoEditor = loginInfoSP.edit();
+
         verifyPreviousLogin();
 
     }
@@ -177,6 +178,13 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+
+        JSONObject object = jsonResponse.getJSONObject("object");
+        long id = object.getLong("id");
+
+        loginInfoEditor.putLong("ID_DONATOR", id);
+        loginInfoEditor.apply();
+
         loginSuccess();
 
     }
@@ -211,7 +219,7 @@ public class Login extends AppCompatActivity {
 
         //TODO TRAVA APENAS PARA TESTES
         //loginSuccess();
-        //goToMessages();
+        goToMessages();
 
         boolean error = false;
 

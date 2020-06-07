@@ -1,5 +1,6 @@
 package br.com.faj.project.donationapp;
 
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,16 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageItemHo
 
     private final int MY_MESSAGE = 1;
     private final int THEIR_MESSAGE = 2;
+    private final long donatorId;
 
     private List<Message> messageList;
 
-    MessagesAdapter(List<Message> messageList) {
+    private long my_id;
+    private SharedPreferences loginInfoSP;
+
+    MessagesAdapter(List<Message> messageList, long donatorId) {
         this.messageList = messageList;
+        this.donatorId = donatorId;
     }
 
     @NonNull
@@ -58,11 +64,9 @@ class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageItemHo
     @Override
     public int getItemViewType(int position) {
 
-        //TODO pegar usuário doando
-        int my_id = 1;
         Message message = messageList.get(position);
-        System.out.println(message.getSender().getId());
-        if (message.getSender().getId() == 1) {
+
+        if (message.getSender().getId() == donatorId) {
             return MY_MESSAGE;
         } else {
             return THEIR_MESSAGE;

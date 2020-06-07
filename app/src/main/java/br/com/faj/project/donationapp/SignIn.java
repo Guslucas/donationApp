@@ -1,6 +1,7 @@
 package br.com.faj.project.donationapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +53,9 @@ public class SignIn extends AppCompatActivity {
 
     ConstraintLayout constraintLayout;
 
+    SharedPreferences loginInfoSP;
+    SharedPreferences.Editor loginInfoEditor;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +87,9 @@ public class SignIn extends AppCompatActivity {
         ft.commit();
 
         queue = Volley.newRequestQueue(this);
+
+        loginInfoSP = getSharedPreferences("loginInfo", MODE_PRIVATE);
+        loginInfoEditor = loginInfoSP.edit();
 
     }
 
@@ -204,12 +211,17 @@ public class SignIn extends AppCompatActivity {
         try {
             System.out.println(response);
             JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
-            if (!jsonObject.getString("status").equalsIgnoreCase("OK")) { //TODO
+            if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
                 showError(jsonObject.getString("errorMessage"));
                 return;
             }
 
             JSONObject object = jsonObject.getJSONObject("object");
+
+            long id = object.getLong("id");
+            loginInfoEditor.putLong("ID_DONATOR", id);
+            loginInfoEditor.apply();
+
             if (object.has("cpf")) {
                 Toast.makeText(this, "É uma pessoa.", Toast.LENGTH_SHORT).show();
                 //TODO gravar info da "sessão"
