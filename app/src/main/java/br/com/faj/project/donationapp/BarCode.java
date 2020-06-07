@@ -1,5 +1,6 @@
 package br.com.faj.project.donationapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,15 +28,17 @@ public class BarCode extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.barCode:
-
+                zoomCode("BAR");
                 break;
             case R.id.qrCode:
-                zoomQrCode();
+                zoomCode("QR");
                 break;
         }
     }
 
-    public void zoomQrCode() {
-
+    public void zoomCode(String code) {
+        Intent i = new Intent(this, FullscreenImage.class);
+        i.putExtra("IMAGE", code);
+        startActivity(i);
     }
 }

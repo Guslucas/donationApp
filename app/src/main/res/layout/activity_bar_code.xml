@@ -16,8 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/donateOrgTV"
-        app:srcCompat="@drawable/barcode"
-        tools:angle="180" />
+        app:srcCompat="@drawable/barcode" />
 
     <TextView
         android:id="@+id/donateOrgTV"
@@ -32,7 +31,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:scaleType="fitXY"
 
         android:id="@+id/qrCode"
         android:layout_width="313dp"
