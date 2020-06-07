@@ -233,6 +233,7 @@ public class Login extends AppCompatActivity {
         //goToBarCode();
         //goToBankInformation();
 
+
         boolean error = false;
 
         String login = loginET.getText().toString();
