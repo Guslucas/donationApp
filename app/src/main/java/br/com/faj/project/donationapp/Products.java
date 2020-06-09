@@ -42,6 +42,7 @@ public class Products extends AppCompatActivity implements DonateMoney {
     RecyclerView mProductRecycler;
     ProductAdapter mProductAdapter;
     private ConstraintLayout productsLayout;
+    int idCampaign;
 
     RequestQueue queue;
 
@@ -50,7 +51,12 @@ public class Products extends AppCompatActivity implements DonateMoney {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-        loadProducts();
+        queue = Volley.newRequestQueue(this);
+
+        idCampaign = getIntent().getIntExtra("ID_CAMPAIGN", -1);
+
+        campaigProducts(idCampaign);
+
 
         mProductRecycler = findViewById(R.id.productsRecycler);
         mProductAdapter = new ProductAdapter(mProductList, this);
@@ -61,19 +67,24 @@ public class Products extends AppCompatActivity implements DonateMoney {
 
         mProductRecycler.setAdapter(mProductAdapter);
 
-        queue = Volley.newRequestQueue(this);
-
 
         productsLayout = findViewById(R.id.productLayout);
     }
 
-    private void campaigProducts(){
+    private void campaigProducts(int idCampaign){
 
-        String idCampaign = getIntent().getStringExtra("ID_CAMPAIGN");
-
-        Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
         String url = getResources().getString(R.string.url);
-        url += "/campaign/" + idCampaign + "/product";
+
+        if(idCampaign == -1){
+
+            url += "/product";
+        }
+
+        else{
+
+            url += "/campaign/" + idCampaign + "/products";
+        }
+
         Log.i("URL sendo usada:", url);
 
         StringRequest requestProducts = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -89,11 +100,13 @@ public class Products extends AppCompatActivity implements DonateMoney {
             @Override
             public void onErrorResponse(VolleyError error) {
                 showError(error);
+                error.printStackTrace();
             }
         });
 
         queue.add(requestProducts);
     }
+
 
 //    private void loadMoney(){
 //
@@ -101,19 +114,19 @@ public class Products extends AppCompatActivity implements DonateMoney {
 //        mProductList.add(new Product("Dinheiro", "Estamos precisando", night,"R$"));
 //    }
 
-    private void loadProducts() {
-        Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
-        mProductList.add(new Product("Money", "We need it.", night, ""));
-        mProductList.add(new Product("Milk", "We accept.", night, "1L"));
-
-        /*String url = getResources().getString(R.string.url);
-        url += "/campaigns"; //TODO alterar para In
-        Log.i("URL sendo usada", url);
-
-        StringRequest requestCampaigns = new StringRequest(Request.Method.GET, url, null, null);
-
-        queue.add(requestCampaigns);*/
-    }
+//    private void loadProducts() {
+//        Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
+//        mProductList.add(new Product("Money", "We need it.", night, ""));
+//        mProductList.add(new Product("Milk", "We accept.", night, "1L"));
+//
+//        /*String url = getResources().getString(R.string.url);
+//        url += "/campaigns"; //TODO alterar para In
+//        Log.i("URL sendo usada", url);
+//
+//        StringRequest requestCampaigns = new StringRequest(Request.Method.GET, url, null, null);
+//
+//        queue.add(requestCampaigns);*/
+//    }
 
     private void listProducts(String response)  throws JSONException {
 
@@ -130,14 +143,20 @@ public class Products extends AppCompatActivity implements DonateMoney {
 
             JSONObject jsonProduct = productsArray.getJSONObject(i);
 
+            long id = jsonProduct.getLong("id");
             String type = jsonProduct.getString("type");
             String name = jsonProduct.getString("name");
-            String description = jsonProduct.getString("description");
-            Product p = new Product(name, description, null, type);
+            Product p = new Product(name, id, null, type);
             products.add(p);
         }
 
         mProductList.clear();
+
+        if(idCampaign == -1){
+
+            mProductList.add(new Product("Dinheiro", 0, null ,"R$"));
+        }
+
         mProductList.addAll(products);
         mProductAdapter.notifyDataSetChanged();
     }

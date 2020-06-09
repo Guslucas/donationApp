@@ -77,7 +77,6 @@ public class Campaigns extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 Intent i = new Intent (getApplicationContext(), Products.class);
                 startActivity(i);
             }
@@ -178,15 +177,14 @@ public class Campaigns extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), "A campanha que você vai doar é " + c.getName(), Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, Products.class);
 
-
-
         Intent md = new Intent (this, MoneyDonation.class);
 
         if(c instanceof MoneyCampaign){
 
-            i.putExtra("ID_CAMPAIGN", c.getId());
+            md.putExtra("ID_CAMPAIGN", c.getId());
             startActivity(md);
-        }else if(c instanceof ProductCampaign){
+        }
+        else if(c instanceof ProductCampaign){
 
             i.putExtra("ID_CAMPAIGN", c.getId());
             startActivity(i);

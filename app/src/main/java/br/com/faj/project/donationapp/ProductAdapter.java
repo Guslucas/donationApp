@@ -36,7 +36,6 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
         Product product = productList.get(position);
 
         holder.mName.setText(product.getName());
-        holder.mDescription.setText(product.getDescription());
         holder.mImage.setImageBitmap(product.getImage());
         holder.mType.setText("(" + product.getType() + ")");
 

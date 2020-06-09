@@ -4,13 +4,13 @@ import android.graphics.Bitmap;
 
 public class Product {
     private String name;
-    private String description;
+    private long id;
     private Bitmap image;
     private String type;
 
-    public Product(String name, String description, Bitmap image, String type) {
+    public Product(String name, long id, Bitmap image, String type) {
         this.name = name;
-        this.description = description;
+        this.id = id;
         this.image = image;
         this.type = type;
     }
@@ -19,8 +19,8 @@ public class Product {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public long getId() {
+        return id;
     }
 
     public Bitmap getImage() {
