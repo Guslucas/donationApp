@@ -16,6 +16,8 @@ import br.com.faj.project.donationapp.model.Product;
 
 class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHolder> {
 
+    public final int MONEY_DONATION = 0;
+
     DonateMoney callingActivity;
     List<Product> productList;
 
@@ -39,7 +41,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
         holder.mImage.setImageBitmap(product.getImage());
         holder.mType.setText("(" + product.getType() + ")");
 
-        if (holder.mName.getText().toString().equals("Money")) {
+        if (product.getId() == MONEY_DONATION) {
             holder.mQuantity.setVisibility(View.GONE);
             holder.mType.setVisibility(View.GONE);
         }
@@ -74,7 +76,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
 
         @Override
         public void onClick(View v) {
-            if (mName.getText().toString().equals("Money")) {
+            if (mName.getId() == MONEY_DONATION) {
                 callingActivity.checkoutMoney();
             }
         }

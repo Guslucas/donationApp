@@ -1,18 +1,18 @@
 package br.com.faj.project.donationapp;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,35 +32,35 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.faj.project.donationapp.model.Campaign;
-import br.com.faj.project.donationapp.model.MoneyCampaign;
 import br.com.faj.project.donationapp.model.Product;
-import br.com.faj.project.donationapp.model.ProductCampaign;
 
 public class Products extends AppCompatActivity implements DonateMoney {
 
-    List<Product> mProductList = new ArrayList<Product>();
-    RecyclerView mProductRecycler;
-    ProductAdapter mProductAdapter;
-    private ConstraintLayout productsLayout;
-    int idCampaign;
+    private List<Product> mProductList = new ArrayList<Product>();
+    private RecyclerView mProductRecycler;
+    private ProductAdapter mProductAdapter;
+    private CoordinatorLayout productsLayout;
+    private int idCampaign;
 
-    RequestQueue queue;
+    private RequestQueue queue;
+
+    private ExtendedFloatingActionButton finalizarFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
+
         queue = Volley.newRequestQueue(this);
 
         idCampaign = getIntent().getIntExtra("ID_CAMPAIGN", -1);
 
-        campaigProducts(idCampaign);
-
+        loadProducts();
 
         mProductRecycler = findViewById(R.id.productsRecycler);
         mProductAdapter = new ProductAdapter(mProductList, this);
+
 
         mProductRecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
         mProductRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -69,18 +70,27 @@ public class Products extends AppCompatActivity implements DonateMoney {
 
 
         productsLayout = findViewById(R.id.productLayout);
+
+
+        finalizarFAB = findViewById(R.id.finalizarFAB);
+        finalizarFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishDonation();
+            }
+        });
+
+        queue = Volley.newRequestQueue(this);
     }
 
-    private void campaigProducts(int idCampaign){
+    private void loadProducts() {
 
         String url = getResources().getString(R.string.url);
 
-        if(idCampaign == -1){
+        if (idCampaign == -1) {
 
             url += "/product";
-        }
-
-        else{
+        } else {
 
             url += "/campaign/" + idCampaign + "/products";
         }
@@ -107,28 +117,30 @@ public class Products extends AppCompatActivity implements DonateMoney {
         queue.add(requestProducts);
     }
 
+    private void finishDonation() {
+        JSONArray produtos = new JSONArray();
 
-//    private void loadMoney(){
-//
-//        Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
-//        mProductList.add(new Product("Dinheiro", "Estamos precisando", night,"R$"));
-//    }
+        for (int i = 0; i < mProductRecycler.getChildCount(); i++) {
+            ProductAdapter.ProductItemHolder holder = (ProductAdapter.ProductItemHolder) mProductRecycler.findViewHolderForAdapterPosition(i);
 
-//    private void loadProducts() {
-//        Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
-//        mProductList.add(new Product("Money", "We need it.", night, ""));
-//        mProductList.add(new Product("Milk", "We accept.", night, "1L"));
-//
-//        /*String url = getResources().getString(R.string.url);
-//        url += "/campaigns"; //TODO alterar para In
-//        Log.i("URL sendo usada", url);
-//
-//        StringRequest requestCampaigns = new StringRequest(Request.Method.GET, url, null, null);
-//
-//        queue.add(requestCampaigns);*/
-//    }
+            JSONObject produto = new JSONObject();
 
-    private void listProducts(String response)  throws JSONException {
+            int qtd = holder.mQuantity.getValue();
+
+            if (qtd > 0) {
+                try {
+                    produto.put("qtd", qtd);
+                    produto.put("id", mProductList.get(i).getId());
+                    produtos.put(produto);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println(produtos.toString());
+    }
+
+    private void listProducts(String response) throws JSONException {
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
@@ -152,9 +164,9 @@ public class Products extends AppCompatActivity implements DonateMoney {
 
         mProductList.clear();
 
-        if(idCampaign == -1){
+        if (idCampaign == -1) {
 
-            mProductList.add(new Product("Dinheiro", 0, null ,"R$"));
+            mProductList.add(new Product("Dinheiro", 0, null, "R$"));
         }
 
         mProductList.addAll(products);
