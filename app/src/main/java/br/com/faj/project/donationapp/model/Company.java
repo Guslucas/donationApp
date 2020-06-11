@@ -13,14 +13,6 @@ public class Company extends Donator {
     private String companyName;
     private Date foundationDate;
 
-    public Company(long id, String email, String password, String bio, Address address, String cnpj, String tradingName, String companyName, Date foundationDate) {
-        super(id, email, password, bio, address);
-        this.cnpj = cnpj;
-        this.tradingName = tradingName;
-        this.companyName = companyName;
-        this.foundationDate = foundationDate;
-    }
-
     public Company(String email, String password, String bio) {
         super(email, password, bio);
     }

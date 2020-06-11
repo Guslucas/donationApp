@@ -25,7 +25,7 @@ public class Person extends Donator {
         super(email, password, bio);
     }
 
-    //TODO testes, pode tirar dps
+    //TODO REMOVER DEPOIS DE TESTADO
     public Person(long id) {
         super(id);
     }

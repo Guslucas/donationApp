@@ -23,10 +23,6 @@ public class Address {
         this.state = state;
     }
 
-    public Address() {
-
-    }
-
     public String getStreet() {
         return street;
     }

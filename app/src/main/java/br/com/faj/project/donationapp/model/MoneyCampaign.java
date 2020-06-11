@@ -7,13 +7,8 @@ public class MoneyCampaign extends Campaign {
 
     //private float goal; comentado pelo momento
 
-
     public MoneyCampaign(long id, String name, String description, Date startDate, Date endDate, float percentage) {
         super(id, name, description, startDate, endDate, percentage);
-    }
-
-    public MoneyCampaign(String name, String description, Date startDate, Date endDate) {
-        super(name, description, startDate, endDate);
     }
 
 }

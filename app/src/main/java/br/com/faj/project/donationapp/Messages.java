@@ -146,7 +146,7 @@ public class Messages extends AppCompatActivity {
     public void sendMessage(View view) {
         String message = newMessageET.getText().toString();
         if (message.trim().isEmpty()) return;
-        messages.add(new Message(message, new Person(donatorId), new Person(2)));
+        messages.add(new Message(message, new Person(donatorId), new Person(2))); //TODO REMOVER DEPOIS DE TESTADO
         messagesAdapter.notifyDataSetChanged();
         messagesRecycler.scrollToPosition(messages.size() - 1);
         newMessageET.setText("");

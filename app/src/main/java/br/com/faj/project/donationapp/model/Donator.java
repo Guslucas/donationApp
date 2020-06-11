@@ -49,10 +49,6 @@ public abstract class Donator {
         return address;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setAddress(Address address) {
         this.address = address;
     }

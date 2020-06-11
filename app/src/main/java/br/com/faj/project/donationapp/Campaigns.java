@@ -94,9 +94,9 @@ public class Campaigns extends AppCompatActivity {
     }
 
     private void loadCampaigns() {
-        Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
+       /* Bitmap night = BitmapFactory.decodeResource(this.getResources(), R.drawable.night);
        mCampaignList.add(new MoneyCampaign("Calm Nights", "Help us donation this.", new Date(2020, 01, 01), new Date(2020, 04, 01)));
-       mCampaignList.add(new ProductCampaign("DARK Nights", "Help us donation this.", new Date(2020, 01, 01), new Date(2020, 04, 01)));
+       mCampaignList.add(new ProductCampaign("DARK Nights", "Help us donation this.", new Date(2020, 01, 01), new Date(2020, 04, 01)));*/
 
         String url = getResources().getString(R.string.url);
         url += "/campaign";

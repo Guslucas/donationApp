@@ -22,9 +22,6 @@ public abstract class Campaign {
         this.percentage = percentage;
     }
 
-    public Campaign(String name, String description, Date startDate, Date endDate) {
-    }
-
     public long getId() {
         return id;
     }
