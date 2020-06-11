@@ -20,7 +20,7 @@ import br.com.faj.project.donationapp.model.Company;
 import br.com.faj.project.donationapp.model.Donator;
 
 
-public class SignInCompanyFragmentInterface extends Fragment implements SignInFormInterface {
+public class SignInCompanyFragment extends Fragment implements SignInForm {
 
     private EditText cnpjET;
     private EditText nomeET;
@@ -63,10 +63,10 @@ public class SignInCompanyFragmentInterface extends Fragment implements SignInFo
     public boolean validate() {
         boolean isValid = true;
 
-        if (!(ValidateEditText.validateEditText(cnpjIL, cnpjET) &
-                ValidateEditText.validateEditText(nomeIL, nomeET) &
-                ValidateEditText.validateEditText(razaoSocialIL,razaoSocialET)&
-                ValidateEditText.validateEditText(dataFundacaoIL, dataFundacaoET))){
+        if (!(EditTextUtil.validateEditText(cnpjIL, cnpjET) &
+                EditTextUtil.validateEditText(nomeIL, nomeET) &
+                EditTextUtil.validateEditText(razaoSocialIL,razaoSocialET)&
+                EditTextUtil.validateEditText(dataFundacaoIL, dataFundacaoET))){
             isValid = false;
         }
 

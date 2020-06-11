@@ -22,7 +22,7 @@
         <activity android:name=".SignIn" />
         <activity android:name=".Products" />
         <activity android:name=".BankInformation" />
-        <activity android:name=".SignInAddressFragmentInterface" />
+        <activity android:name=".SignInAddressFragment" />
         <activity
             android:name=".Campaigns"
             android:label="@string/title_activity_campaign"

@@ -29,7 +29,7 @@ import java.util.TimerTask;
 import br.com.faj.project.donationapp.model.Address;
 import br.com.faj.project.donationapp.model.Donator;
 
-public class SignInAddressFragmentInterface extends Fragment implements SignInFormInterface {
+public class SignInAddressFragment extends Fragment implements SignInForm {
 
     private TextInputLayout cepIL;
     private TextInputLayout bairroIL;
@@ -147,13 +147,13 @@ public class SignInAddressFragmentInterface extends Fragment implements SignInFo
     public boolean validate() {
         boolean isValid = true;
 
-        if (!(ValidateEditText.validateEditText(ruaAvenidaIL, ruaAvenidaET) &
-                ValidateEditText.validateNumber(numeroIL, numeroET) &
-                ValidateEditText.validateEditText(complementoIL,complementoET)&
-                ValidateEditText.validateEditText(bairroIL, bairroET) &
-                ValidateEditText.validateEditText(cidadeIL, cidadeET) &
-                ValidateEditText.validateEditText(cepIL, cepET) &
-                ValidateEditText.validateEditText(estadoIL, estadoET))) {
+        if (!(EditTextUtil.validateEditText(ruaAvenidaIL, ruaAvenidaET) &
+                EditTextUtil.validateNumber(numeroIL, numeroET) &
+                EditTextUtil.validateEditText(complementoIL,complementoET)&
+                EditTextUtil.validateEditText(bairroIL, bairroET) &
+                EditTextUtil.validateEditText(cidadeIL, cidadeET) &
+                EditTextUtil.validateEditText(cepIL, cepET) &
+                EditTextUtil.validateEditText(estadoIL, estadoET))) {
             isValid = false;
         }
 

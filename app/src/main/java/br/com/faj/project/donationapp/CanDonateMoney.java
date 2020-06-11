@@ -1,5 +1,5 @@
 package br.com.faj.project.donationapp;
 
-public interface DonateMoney {
+public interface CanDonateMoney {
     void checkoutMoney();
 }

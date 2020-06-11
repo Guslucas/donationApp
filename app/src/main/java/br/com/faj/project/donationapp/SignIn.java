@@ -62,10 +62,10 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        SignInBasicInfoFragmentInterface basicInfo = new SignInBasicInfoFragmentInterface();
-        SignInPersonFragmentInterface person = new SignInPersonFragmentInterface();
-        SignInCompanyFragmentInterface company = new SignInCompanyFragmentInterface();
-        SignInAddressFragmentInterface address = new SignInAddressFragmentInterface();
+        SignInBasicInfoFragment basicInfo = new SignInBasicInfoFragment();
+        SignInPersonFragment person = new SignInPersonFragment();
+        SignInCompanyFragment company = new SignInCompanyFragment();
+        SignInAddressFragment address = new SignInAddressFragment();
 
         titulos.add("Informações Básicas");
         telas.add(basicInfo);
@@ -118,7 +118,7 @@ public class SignIn extends AppCompatActivity {
 
     public void next(View view) {
 
-        SignInFormInterface telaAtual = (SignInFormInterface) telas.get(this.telaAtual);
+        SignInForm telaAtual = (SignInForm) telas.get(this.telaAtual);
 
         if (!telaAtual.validate()) {
             return;
@@ -126,7 +126,7 @@ public class SignIn extends AppCompatActivity {
 
         int proximaTela = 0;
         if (this.telaAtual == 0) {
-            SignInBasicInfoFragmentInterface basicInfo = (SignInBasicInfoFragmentInterface) telas.get(0);
+            SignInBasicInfoFragment basicInfo = (SignInBasicInfoFragment) telas.get(0);
             type = basicInfo.getType();
             if (type.equals(DonatorType.PERSON)) {
                 proximaTela = 1;
@@ -137,18 +137,18 @@ public class SignIn extends AppCompatActivity {
 
             Donator d = null;
 
-            SignInFormInterface basicInfo = (SignInFormInterface) telas.get(0);
+            SignInForm basicInfo = (SignInForm) telas.get(0);
             d = basicInfo.extract(d);
 
             if (d instanceof Person) {
-                SignInFormInterface personInfo = (SignInFormInterface) telas.get(1);
+                SignInForm personInfo = (SignInForm) telas.get(1);
                 d = personInfo.extract(d);
             } else if (d instanceof Company) {
-                SignInFormInterface companyInfo = (SignInFormInterface) telas.get(2);
+                SignInForm companyInfo = (SignInForm) telas.get(2);
                 d = companyInfo.extract(d);
             }
 
-            SignInFormInterface addressInfo = (SignInFormInterface) telas.get(3);
+            SignInForm addressInfo = (SignInForm) telas.get(3);
             d = addressInfo.extract(d);
 
             signIn(d);

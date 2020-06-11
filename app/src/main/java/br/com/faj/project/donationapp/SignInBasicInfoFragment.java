@@ -19,7 +19,7 @@ import br.com.faj.project.donationapp.model.DonatorType;
 import br.com.faj.project.donationapp.model.Person;
 
 
-public class SignInBasicInfoFragmentInterface extends Fragment implements SignInFormInterface {
+public class SignInBasicInfoFragment extends Fragment implements SignInForm {
 
     private EditText emailET;
     private EditText bioET;
@@ -73,9 +73,9 @@ public class SignInBasicInfoFragmentInterface extends Fragment implements SignIn
     public boolean validate() {
         boolean isValid = true;
 
-        if (!(ValidateEditText.validateEditText(emailIL, emailET) &
-                ValidateEditText.validateEditText(bioIL, bioET) &
-                ValidateEditText.validatePassword(senhaIL, senhaET, confirmaSenhaIL, confirmaSenhaET))) {
+        if (!(EditTextUtil.validateEditText(emailIL, emailET) &
+                EditTextUtil.validateEditText(bioIL, bioET) &
+                EditTextUtil.validatePassword(senhaIL, senhaET, confirmaSenhaIL, confirmaSenhaET))) {
             isValid = false;
         }
 

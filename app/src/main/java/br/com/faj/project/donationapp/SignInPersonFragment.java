@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +20,7 @@ import br.com.faj.project.donationapp.model.Donator;
 import br.com.faj.project.donationapp.model.Person;
 
 
-public class SignInPersonFragmentInterface extends Fragment implements SignInFormInterface {
+public class SignInPersonFragment extends Fragment implements SignInForm {
 
     private EditText cpfET;
     private EditText nomeET;
@@ -65,10 +64,10 @@ public class SignInPersonFragmentInterface extends Fragment implements SignInFor
     public boolean validate() {
         boolean isValid = true;
 
-        if (!(ValidateEditText.validateEditText(cpfIL, cpfET) &
-                ValidateEditText.validateEditText(nomeIL, nomeET) &
-                ValidateEditText.validateEditText(sobrenomeIL,sobrenomeET)&
-                ValidateEditText.validateEditText(dataNascimentoIL, dataNascimentoET))) {
+        if (!(EditTextUtil.validateEditText(cpfIL, cpfET) &
+                EditTextUtil.validateEditText(nomeIL, nomeET) &
+                EditTextUtil.validateEditText(sobrenomeIL,sobrenomeET)&
+                EditTextUtil.validateEditText(dataNascimentoIL, dataNascimentoET))) {
             isValid = false;
         }
         return isValid;

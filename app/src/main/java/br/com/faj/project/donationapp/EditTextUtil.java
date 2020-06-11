@@ -4,7 +4,7 @@ import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class ValidateEditText {
+public class EditTextUtil {
     public static boolean validateEditText(TextInputLayout inputLayout, EditText editText) {
         boolean isValid = true;
         if (editText.getText().toString().trim().isEmpty()) {

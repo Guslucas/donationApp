@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -34,7 +33,7 @@ import java.util.List;
 
 import br.com.faj.project.donationapp.model.Product;
 
-public class Products extends AppCompatActivity implements DonateMoney {
+public class Products extends AppCompatActivity implements CanDonateMoney {
 
     private List<Product> mProductList = new ArrayList<Product>();
     private RecyclerView mProductRecycler;

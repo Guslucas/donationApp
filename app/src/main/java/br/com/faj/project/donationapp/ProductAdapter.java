@@ -18,10 +18,10 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
 
     public final int MONEY_DONATION = 0;
 
-    DonateMoney callingActivity;
+    CanDonateMoney callingActivity;
     List<Product> productList;
 
-    public ProductAdapter(List<Product> productList, DonateMoney callingActivity) {
+    public ProductAdapter(List<Product> productList, CanDonateMoney callingActivity) {
         this.productList = productList;
         this.callingActivity = callingActivity;
     }
