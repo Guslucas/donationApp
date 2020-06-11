@@ -182,7 +182,19 @@ public class Login extends AppCompatActivity {
         JSONObject object = jsonResponse.getJSONObject("object");
         long id = object.getLong("id");
 
+
+        //TODO talvez separar em um método diferente de uma outra classe
+        String name;
+        if (object.has("cpf")) {
+            name = object.getString("name");
+        } else {
+            name = object.getString("companyName");
+        }
+
         loginInfoEditor.putLong("ID_DONATOR", id);
+        loginInfoEditor.putString("NAME_DONATOR", name);
+
+
         loginInfoEditor.apply();
 
         loginSuccess();

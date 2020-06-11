@@ -15,7 +15,7 @@ public class BankInformation extends AppCompatActivity {
     }
 
     public void finalizar (View v){
-        Intent i = new Intent(this, ProductQtd.class);
+        Intent i = new Intent(this, ThanksDonation.class);
         startActivity(i);
     }
 }

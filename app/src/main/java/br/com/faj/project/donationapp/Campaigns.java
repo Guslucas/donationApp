@@ -1,8 +1,7 @@
 package br.com.faj.project.donationapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,13 +30,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.faj.project.donationapp.model.Campaign;
 import br.com.faj.project.donationapp.model.MoneyCampaign;
-import br.com.faj.project.donationapp.model.Product;
 import br.com.faj.project.donationapp.model.ProductCampaign;
 
 public class Campaigns extends AppCompatActivity {
@@ -50,6 +46,9 @@ public class Campaigns extends AppCompatActivity {
     RequestQueue queue;
     private ConstraintLayout campaignsLayout;
     private boolean firstRun = true;
+
+    private SharedPreferences campaignInfo;
+    private SharedPreferences.Editor campaignInfoEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +83,8 @@ public class Campaigns extends AppCompatActivity {
 
         campaignsLayout = findViewById(R.id.campaignsLayout);
 
+        campaignInfo = getSharedPreferences("campaignInfo", MODE_PRIVATE);
+        campaignInfoEditor = campaignInfo.edit();
 
     }
 
@@ -91,6 +92,7 @@ public class Campaigns extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadCampaigns();
+        campaignInfoEditor.clear();
     }
 
     private void loadCampaigns() {
@@ -178,6 +180,9 @@ public class Campaigns extends AppCompatActivity {
         Intent i = new Intent(this, Products.class);
 
         Intent md = new Intent (this, MoneyDonation.class);
+
+        campaignInfoEditor.putString("NAME_CAMPAIGN", c.getName());
+        campaignInfoEditor.apply();
 
         if(c instanceof MoneyCampaign){
 
