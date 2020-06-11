@@ -39,7 +39,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
     private RecyclerView mProductRecycler;
     private ProductAdapter mProductAdapter;
     private CoordinatorLayout productsLayout;
-    private int idCampaign;
+    private long idCampaign;
 
     private RequestQueue queue;
 
@@ -53,7 +53,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
 
         queue = Volley.newRequestQueue(this);
 
-        idCampaign = getIntent().getIntExtra("ID_CAMPAIGN", -1);
+        idCampaign = getIntent().getLongExtra("ID_CAMPAIGN", -1);
 
         loadProducts();
 

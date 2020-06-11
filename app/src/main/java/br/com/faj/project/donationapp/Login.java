@@ -233,12 +233,12 @@ public class Login extends AppCompatActivity {
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
-        loginSuccess();
+        //loginSuccess();
         //goToMessages();
         //goToBarCode();
         //goToBankInformation();
         //goToProducts();
-        finish();
+        //finish();
 
 
         boolean error = false;
