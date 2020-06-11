@@ -18,9 +18,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -28,6 +32,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import br.com.faj.project.donationapp.model.Donator;
 import br.com.faj.project.donationapp.model.Message;
 import br.com.faj.project.donationapp.model.Person;
 
@@ -36,7 +41,7 @@ public class Messages extends AppCompatActivity {
     private EditText personET;
     private EditText newMessageET;
 
-    private List<Message> messages = new ArrayList<>();
+    private List<Message> mMessagesList = new ArrayList<>();
     private RecyclerView messagesRecycler;
     private MessagesAdapter messagesAdapter;
 
@@ -47,6 +52,7 @@ public class Messages extends AppCompatActivity {
 
     private Timer timer = new Timer();
     private final long DELAY = 1000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +102,12 @@ public class Messages extends AppCompatActivity {
         Person eu = new Person(donatorId, "gus@gmail", "", "", null, "", "", "", null);
         Person outro = new Person(2, "joao@gmail", "", "", null, "", "", "", null);
 
-        messages.add(new Message("Ola, bom dia!", eu, outro));
-        messages.add(new Message("Tudo bem?", eu, outro));
-        messages.add(new Message("Tudo sim, e você?", outro, eu));
-        messages.add(new Message("Tudo tb, obg.", eu, outro));
+        mMessagesList.add(new Message("Ola, bom dia!", eu, outro));
+        mMessagesList.add(new Message("Tudo bem?", eu, outro));
+        mMessagesList.add(new Message("Tudo sim, e você?", outro, eu));
+        mMessagesList.add(new Message("Tudo tb, obg.", eu, outro));
 
-        messagesAdapter = new MessagesAdapter(messages, donatorId);
+        messagesAdapter = new MessagesAdapter(mMessagesList, donatorId);
 
         messagesRecycler = findViewById(R.id.messages_recycler);
         messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -127,6 +133,11 @@ public class Messages extends AppCompatActivity {
         StringRequest messageRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                try {
+                    listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
+                } catch (Exception e) {
+                    showError(e);
+                }
 
             }
         }, null) {
@@ -146,9 +157,52 @@ public class Messages extends AppCompatActivity {
     public void sendMessage(View view) {
         String message = newMessageET.getText().toString();
         if (message.trim().isEmpty()) return;
-        messages.add(new Message(message, new Person(donatorId), new Person(2))); //TODO REMOVER DEPOIS DE TESTADO
+        mMessagesList.add(new Message(message, new Person(donatorId), new Person(2))); //TODO REMOVER DEPOIS DE TESTADO
         messagesAdapter.notifyDataSetChanged();
-        messagesRecycler.scrollToPosition(messages.size() - 1);
+        messagesRecycler.scrollToPosition(mMessagesList.size() - 1);
         newMessageET.setText("");
     }
+
+    public void listMessage(String response) throws JSONException{
+
+        JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
+        if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
+            showError(jsonObject.getString("errorMessage"));
+            return;
+        }
+
+        List<Message> messages = new ArrayList<>();
+        JSONArray messagesArray = jsonObject.getJSONArray("object");
+
+        for(int i=0; i<messagesArray.length(); i++){
+            Message m = null;
+
+            JSONObject jsonMessage = messagesArray.getJSONObject(i);
+
+            long id = jsonMessage.getLong("id");
+            String  content = jsonMessage.getString("content");
+            //Date date = jsonMessage.getString();
+            Donator idSender =  new Donator(jsonMessage.getJSONObject("sender").getLong("id"));
+            Donator idReciver = new Donator(jsonMessage.getJSONObject("reciver").getLong("id"));
+
+            m = new Message(id, content, null, idSender, idReciver);
+
+            messages.add(m);
+        }
+
+        mMessagesList.clear();
+        mMessagesList.addAll(messages);
+        messagesAdapter.notifyDataSetChanged();
+
+    }
+
+    private void showError(Exception e) {
+        Snackbar.make(messagesRecycler, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
+        e.printStackTrace();
+    }
+
+    private void showError(String errorMessage) {
+        Snackbar.make(messagesRecycler, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
+    }
+
 }

@@ -3,7 +3,7 @@ package br.com.faj.project.donationapp.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class Donator {
+public class Donator {
     private long id;
     private String email;
     private String password;
