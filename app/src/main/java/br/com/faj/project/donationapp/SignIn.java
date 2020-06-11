@@ -220,6 +220,15 @@ public class SignIn extends AppCompatActivity {
 
             long id = object.getLong("id");
             loginInfoEditor.putLong("ID_DONATOR", id);
+
+            String name;
+            if (object.getString("type").equalsIgnoreCase("Person")) {
+                name = object.getString("name");
+            } else {
+                name = object.getString("companyName");
+            }
+            loginInfoEditor.putString("NAME_DONATOR", name);
+
             loginInfoEditor.apply();
 
             if (object.has("cpf")) {
