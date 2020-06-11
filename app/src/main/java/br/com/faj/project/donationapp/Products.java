@@ -170,6 +170,13 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
 
         mProductList.addAll(products);
         mProductAdapter.notifyDataSetChanged();
+
+        if (products.isEmpty()) {
+            finalizarFAB.setVisibility(View.GONE);
+        } else {
+            finalizarFAB.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public void checkoutMoney() {
