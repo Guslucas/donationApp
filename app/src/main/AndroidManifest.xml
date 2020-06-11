@@ -17,7 +17,7 @@
         <activity android:name=".BarCode" />
         <activity android:name=".Messages" />
         <activity android:name=".BankBill" />
-        <activity android:name=".ProductQtd" />
+        <activity android:name=".ThanksDonation" />
         <activity android:name=".MoneyDonation" />
         <activity android:name=".SignIn" />
         <activity android:name=".Products" />

@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class ProductQtd extends AppCompatActivity {
+public class ThanksDonation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class ProductQtd extends AppCompatActivity {
 
         Intent i = new Intent(this, Campaigns.class);
         startActivity(i);
-        ActivityCompat.finishAffinity(ProductQtd.this);
+        ActivityCompat.finishAffinity(ThanksDonation.this);
     }
 
     public void share(View view) {

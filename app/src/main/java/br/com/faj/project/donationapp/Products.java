@@ -1,6 +1,7 @@
 package br.com.faj.project.donationapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,9 +29,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.faj.project.donationapp.model.Item;
 import br.com.faj.project.donationapp.model.Product;
 
 public class Products extends AppCompatActivity implements CanDonateMoney {
@@ -40,8 +43,12 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
     private ProductAdapter mProductAdapter;
     private CoordinatorLayout productsLayout;
     private long idCampaign;
+    private long idDonator;
 
     private RequestQueue queue;
+
+    private SharedPreferences loginInfoSP;
+
 
     private ExtendedFloatingActionButton finalizarFAB;
 
@@ -75,9 +82,26 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
         finalizarFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishDonation();
+                try {
+                    finishProductDonation();
+                } catch (JSONException e) {
+                    showError(e);
+                }
             }
         });
+
+        loginInfoSP = getSharedPreferences("loginInfo", MODE_PRIVATE);
+
+        if (loginInfoSP.contains("ID_DONATOR")) {
+            idDonator = loginInfoSP.getLong("ID_DONATOR", -1);
+        } else {
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                showError(e);
+                e.printStackTrace();
+            }
+        }
 
         queue = Volley.newRequestQueue(this);
     }
@@ -116,27 +140,80 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
         queue.add(requestProducts);
     }
 
-    private void finishDonation() {
-        JSONArray produtos = new JSONArray();
+    private void finishProductDonation() throws JSONException {
+        final JSONArray itens = new JSONArray();
 
         for (int i = 0; i < mProductRecycler.getChildCount(); i++) {
             ProductAdapter.ProductItemHolder holder = (ProductAdapter.ProductItemHolder) mProductRecycler.findViewHolderForAdapterPosition(i);
 
-            JSONObject produto = new JSONObject();
-
             int qtd = holder.mQuantity.getValue();
-
             if (qtd > 0) {
-                try {
-                    produto.put("qtd", qtd);
-                    produto.put("id", mProductList.get(i).getId());
-                    produtos.put(produto);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+                for (int j = 0; j < qtd; j++) {
+                    Item item = new Item(mProductList.get(i));
+                    itens.put(item.toJSON());
                 }
             }
         }
-        System.out.println(produtos.toString());
+
+        String url = getResources().getString(R.string.url);
+        if (idCampaign == -1) {
+            url += "/donate";
+        } else {
+            url += "/campaign/" + idCampaign + "/donate";
+        }
+        Log.i("URL sendo usada", url);
+
+        JSONObject json = null;
+        try {
+            json = new DonationUtil().parseToJSON(idDonator, idCampaign, itens);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JSONObject finalJson = json;
+        StringRequest donateRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    responseDonate(response);
+                } catch (JSONException e) {
+                    showError(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                showError(error);
+            }
+        }) {
+            @Override
+            public byte[] getBody() {
+                return finalJson.toString().getBytes(StandardCharsets.UTF_8);
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+        };
+
+        queue.add(donateRequest);
+
+    }
+
+    private void responseDonate(String response) throws JSONException {
+
+        JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
+        if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
+            showError(jsonObject.getString("errorMessage"));
+            return;
+        }
+
+        Intent i = new Intent(this, ThanksDonation.class);
+        startActivity(i);
+        finishAffinity();
+
     }
 
     private void listProducts(String response) throws JSONException {
