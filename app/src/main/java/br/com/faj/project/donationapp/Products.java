@@ -241,7 +241,6 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
         mProductList.clear();
 
         if (idCampaign == -1) {
-
             mProductList.add(new Product("Dinheiro", 0, null, "R$"));
         }
 

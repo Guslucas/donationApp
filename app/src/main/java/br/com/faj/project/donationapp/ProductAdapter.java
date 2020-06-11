@@ -76,7 +76,7 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
 
         @Override
         public void onClick(View v) {
-            if (mName.getId() == MONEY_DONATION) {
+            if (mName.getText().toString().equalsIgnoreCase("Dinheiro")) {
                 callingActivity.checkoutMoney();
             }
         }
