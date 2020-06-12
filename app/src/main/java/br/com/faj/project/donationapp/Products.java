@@ -166,7 +166,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
 
         JSONObject json = null;
         try {
-            json = new DonationUtil().parseToJSON(idDonator, idCampaign, itens);
+            json = new DonationUtil().parseProductDonationToJSON(idDonator, idCampaign, itens);
         } catch (JSONException e) {
             e.printStackTrace();
         }

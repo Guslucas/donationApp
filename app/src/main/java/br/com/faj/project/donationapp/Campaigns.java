@@ -182,6 +182,7 @@ public class Campaigns extends AppCompatActivity {
         Intent md = new Intent (this, MoneyDonation.class);
 
         campaignInfoEditor.putString("NAME_CAMPAIGN", c.getName());
+        campaignInfoEditor.putLong("ID_CAMPAIGN", c.getId());
         campaignInfoEditor.apply();
 
         if(c instanceof MoneyCampaign){
