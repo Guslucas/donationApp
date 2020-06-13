@@ -27,8 +27,11 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -99,19 +102,19 @@ public class Messages extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Person eu = new Person(donatorId, "gus@gmail", "", "", null, "", "", "", null);
-        Person outro = new Person(2, "joao@gmail", "", "", null, "", "", "", null);
-
-        mMessagesList.add(new Message("Ola, bom dia!", eu, outro));
-        mMessagesList.add(new Message("Tudo bem?", eu, outro));
-        mMessagesList.add(new Message("Tudo sim, e você?", outro, eu));
-        mMessagesList.add(new Message("Tudo tb, obg.", eu, outro));
-
-        messagesAdapter = new MessagesAdapter(mMessagesList, donatorId);
-
-        messagesRecycler = findViewById(R.id.messages_recycler);
-        messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
-        messagesRecycler.setAdapter(messagesAdapter);
+//        Person eu = new Person(donatorId, "gus@gmail", "", "", null, "", "", "", null);
+//        Person outro = new Person(2, "joao@gmail", "", "", null, "", "", "", null);
+//
+//        mMessagesList.add(new Message("Ola, bom dia!", eu, outro));
+//        mMessagesList.add(new Message("Tudo bem?", eu, outro));
+//        mMessagesList.add(new Message("Tudo sim, e você?", outro, eu));
+//        mMessagesList.add(new Message("Tudo tb, obg.", eu, outro));
+//
+//        messagesAdapter = new MessagesAdapter(mMessagesList, donatorId);
+//
+//        messagesRecycler = findViewById(R.id.messages_recycler);
+//        messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
+//        messagesRecycler.setAdapter(messagesAdapter);
 
 
     }
@@ -154,13 +157,14 @@ public class Messages extends AppCompatActivity {
 
     }
 
-    public void sendMessage(View view) {
+    public void sendMessage(View view) throws JSONException {
         String message = newMessageET.getText().toString();
         if (message.trim().isEmpty()) return;
         mMessagesList.add(new Message(message, new Person(donatorId), new Person(2))); //TODO REMOVER DEPOIS DE TESTADO
         messagesAdapter.notifyDataSetChanged();
         messagesRecycler.scrollToPosition(mMessagesList.size() - 1);
         newMessageET.setText("");
+        sendMessageServer();
     }
 
     public void listMessage(String response) throws JSONException{
@@ -193,6 +197,47 @@ public class Messages extends AppCompatActivity {
         mMessagesList.clear();
         mMessagesList.addAll(messages);
         messagesAdapter.notifyDataSetChanged();
+
+    }
+
+    private void sendMessageServer() throws JSONException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
+
+        String url = getResources().getString(R.string.url);
+        url += "/donator/" + donatorId + "/message/new";
+        Log.i("URL sendo usada", url);
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("content", newMessageET.getText().toString());
+        new JSONObject().put("email",personET.getText().toString());
+        jsonObject.put("date",sdf.format(new Date()));
+
+        final String message  = jsonObject.toString();
+
+        StringRequest messageRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
+                } catch (Exception e) {
+                    showError(e);
+                }
+            }
+        }, null){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return message.getBytes(StandardCharsets.UTF_8);
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+        };
+
 
     }
 
