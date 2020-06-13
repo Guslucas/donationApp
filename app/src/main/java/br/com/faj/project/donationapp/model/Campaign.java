@@ -11,7 +11,6 @@ public abstract class Campaign {
     private Date startDate;
     private Date endDate;
     private float percentage;
-    private Bitmap image;
 
     public Campaign(long id, String name, String description, Date startDate, Date endDate, float percentage) {
         this.id = id;
@@ -46,7 +45,4 @@ public abstract class Campaign {
         return percentage;
     }
 
-    public Bitmap getImage() {
-        return image;
-    }
 }

@@ -45,7 +45,6 @@ public class Campaigns extends AppCompatActivity {
 
     RequestQueue queue;
     private ConstraintLayout campaignsLayout;
-    private boolean firstRun = true;
 
     private SharedPreferences campaignInfo;
     private SharedPreferences.Editor campaignInfoEditor;
