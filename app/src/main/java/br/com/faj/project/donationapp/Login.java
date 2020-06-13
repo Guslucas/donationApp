@@ -208,6 +208,11 @@ public class Login extends AppCompatActivity {
 
     }
 
+    private void testeProduct(){
+        Intent intent =  new Intent(this, AddProductAdm.class);
+        startActivity(intent);
+    }
+
     private void loginSuccess() {
         // Código usado para testes
         Intent i = new Intent(this, Menu.class);
@@ -257,6 +262,7 @@ public class Login extends AppCompatActivity {
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
+        //testeProduct();
         //loginSuccess();
         //goToMessages();
         //goToBarCode();

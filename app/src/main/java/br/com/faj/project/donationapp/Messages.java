@@ -238,7 +238,7 @@ public class Messages extends AppCompatActivity {
             }
         };
 
-
+            queue.add(messageRequest);
     }
 
     private void showError(Exception e) {
