@@ -93,6 +93,7 @@ public class Campaigns extends AppCompatActivity {
         super.onResume();
         loadCampaigns();
         campaignInfoEditor.clear();
+        campaignInfoEditor.apply();
     }
 
     private void loadCampaigns() {

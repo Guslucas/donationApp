@@ -114,6 +114,13 @@ public class Login extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loginInfoEditor.clear();
+        loginInfoEditor.apply();
+    }
+
     private void verifyPreviousLogin() {
 
         String login = loginInfoSP.getString("activity_login", null);
