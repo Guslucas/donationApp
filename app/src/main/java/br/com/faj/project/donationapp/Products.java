@@ -115,7 +115,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
             url += "/product";
         } else {
 
-            url += "/campaign/" + idCampaign + "/products";
+            url += "/campaign/" + idCampaign + "/product";
         }
 
         Log.i("URL sendo usada:", url);
