@@ -13,7 +13,6 @@ public abstract class Donation {
     private Date date;
     private Campaign campaign;
     private Donator donator;
-    List<Item> items = new ArrayList<>();
 
     public Donation(long id, Campaign campaign, Donator donator) {
         this.id = id;

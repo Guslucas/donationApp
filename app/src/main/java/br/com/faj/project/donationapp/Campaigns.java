@@ -207,9 +207,4 @@ public class Campaigns extends AppCompatActivity {
     private void showError(String errorMessage) {
         Snackbar.make(campaignsLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
-
-    private void logOut() {
-        //TODO sharedPreferences.Remove user logado
-
-    }
 }

@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FullscreenImage"></activity>
+        <activity android:name=".Menu"></activity>
+        <activity android:name=".FullscreenImage" />
         <activity android:name=".BarCode" />
         <activity android:name=".Messages" />
         <activity android:name=".BankBill" />
