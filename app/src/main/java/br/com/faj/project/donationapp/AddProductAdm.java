@@ -20,11 +20,13 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
+
 public class AddProductAdm extends AppCompatActivity {
 
     private EditText productNameET;
     private  EditText typeET;
-    private ConstraintLayout productLayout;
+    private ConstraintLayout addProductLayout;
     RequestQueue queue;
 
     @Override
@@ -34,19 +36,19 @@ public class AddProductAdm extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product_adm);
-        productLayout = findViewById(R.id.productLayout);
+        addProductLayout = findViewById(R.id.addProductLayout);
     }
 
     public void sendProductServer(View view) throws JSONException {
 
-        productNameET = findViewById(R.id.productNameET);
-        typeET = findViewById(R.id.typeET);
+        productNameET = findViewById(R.id.productNameEditText);
+        typeET = findViewById(R.id.typeEditText);
 
         String url = getResources().getString(R.string.url);
         url += "/product" ;
         Log.i("URL sendo usada", url);
 
-        JSONObject jsonObject =  new JSONObject();
+        final JSONObject jsonObject =  new JSONObject();
 
         jsonObject.put("name", productNameET.getText().toString());
         jsonObject.put("type", typeET.getText().toString());
@@ -59,7 +61,7 @@ public class AddProductAdm extends AppCompatActivity {
 
                 productNameET.setText("");
                 typeET.setText("");
-                Snackbar.make(productLayout, "Produto adicionado com sucesso!", BaseTransientBottomBar.LENGTH_LONG);
+                Snackbar.make(addProductLayout, "Produto adicionado com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
 
             }
         }, new Response.ErrorListener() {
@@ -68,6 +70,17 @@ public class AddProductAdm extends AppCompatActivity {
                 showError(error);
             }
         }){
+            @Override
+            public byte[] getBody() {
+                return jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+
         };
 
         queue.add(productRequest);
@@ -75,12 +88,12 @@ public class AddProductAdm extends AppCompatActivity {
 
 
     private void showError(Exception e) {
-        Snackbar.make(productLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
+        Snackbar.make(addProductLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
         e.printStackTrace();
     }
 
     private void showError(String errorMessage) {
-        Snackbar.make(productLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
+        Snackbar.make(addProductLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
 }
