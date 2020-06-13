@@ -114,6 +114,13 @@ public class Login extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loginInfoEditor.clear();
+        loginInfoEditor.apply();
+    }
+
     private void verifyPreviousLogin() {
 
         String login = loginInfoSP.getString("activity_login", null);
@@ -203,7 +210,7 @@ public class Login extends AppCompatActivity {
 
     private void loginSuccess() {
         // Código usado para testes
-        Intent i = new Intent(this, Campaigns.class);
+        Intent i = new Intent(this, Menu.class);
         startActivity(i);
     }
 
@@ -242,6 +249,11 @@ public class Login extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void goToMenu() {
+        Intent i = new Intent(this, Menu.class);
+        startActivity(i);
+    }
+
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
@@ -250,6 +262,7 @@ public class Login extends AppCompatActivity {
         //goToBarCode();
         //goToBankInformation();
         //goToProducts();
+        //goToMenu();
         //finish();
 
 

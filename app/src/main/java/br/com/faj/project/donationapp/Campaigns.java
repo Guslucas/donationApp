@@ -93,6 +93,7 @@ public class Campaigns extends AppCompatActivity {
         super.onResume();
         loadCampaigns();
         campaignInfoEditor.clear();
+        campaignInfoEditor.apply();
     }
 
     private void loadCampaigns() {
@@ -206,10 +207,5 @@ public class Campaigns extends AppCompatActivity {
 
     private void showError(String errorMessage) {
         Snackbar.make(campaignsLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
-    }
-
-    private void logOut() {
-        //TODO sharedPreferences.Remove user logado
-
     }
 }
