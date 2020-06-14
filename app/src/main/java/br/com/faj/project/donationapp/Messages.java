@@ -104,17 +104,16 @@ public class Messages extends AppCompatActivity {
 
 //        Person eu = new Person(donatorId, "gus@gmail", "", "", null, "", "", "", null);
 //        Person outro = new Person(2, "joao@gmail", "", "", null, "", "", "", null);
-//
 //        mMessagesList.add(new Message("Ola, bom dia!", eu, outro));
 //        mMessagesList.add(new Message("Tudo bem?", eu, outro));
 //        mMessagesList.add(new Message("Tudo sim, e você?", outro, eu));
 //        mMessagesList.add(new Message("Tudo tb, obg.", eu, outro));
 //
-//        messagesAdapter = new MessagesAdapter(mMessagesList, donatorId);
-//
-//        messagesRecycler = findViewById(R.id.messages_recycler);
-//        messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
-//        messagesRecycler.setAdapter(messagesAdapter);
+        messagesAdapter = new MessagesAdapter(mMessagesList, donatorId);
+
+        messagesRecycler = findViewById(R.id.messages_recycler);
+        messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
+        messagesRecycler.setAdapter(messagesAdapter);
 
 
     }
@@ -158,13 +157,17 @@ public class Messages extends AppCompatActivity {
     }
 
     public void sendMessage(View view) throws JSONException {
+        String email = personET.getText().toString();
         String message = newMessageET.getText().toString();
-        if (message.trim().isEmpty()) return;
-        mMessagesList.add(new Message(message, new Person(donatorId), new Person(2))); //TODO REMOVER DEPOIS DE TESTADO
+        if (email.trim().isEmpty() || message.trim().isEmpty()) {
+            showError("O usuário não pode estar vazio");
+            return;
+        }
+        mMessagesList.add(new Message(message, new Person(donatorId), new Person(-10))); //TODO REMOVER DEPOIS DE TESTADO
         messagesAdapter.notifyDataSetChanged();
         messagesRecycler.scrollToPosition(mMessagesList.size() - 1);
-        newMessageET.setText("");
         sendMessageServer();
+        newMessageET.setText("");
     }
 
     public void listMessage(String response) throws JSONException{
@@ -202,8 +205,8 @@ public class Messages extends AppCompatActivity {
 
     private void sendMessageServer() throws JSONException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        //sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
 
         String url = getResources().getString(R.string.url);
         url += "/donator/" + donatorId + "/message/new";
@@ -212,7 +215,7 @@ public class Messages extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("content", newMessageET.getText().toString());
-        new JSONObject().put("email",personET.getText().toString());
+        jsonObject.put("receiver", new JSONObject().put("type", "Person").put("email", personET.getText().toString()));
         jsonObject.put("date",sdf.format(new Date()));
 
         final String message  = jsonObject.toString();
@@ -221,7 +224,8 @@ public class Messages extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
+                    //listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
+                    showError("Adicionado?");
                 } catch (Exception e) {
                     showError(e);
                 }
