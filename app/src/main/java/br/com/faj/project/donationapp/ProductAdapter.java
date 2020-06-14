@@ -38,7 +38,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
         Product product = productList.get(position);
 
         holder.mName.setText(product.getName());
-        holder.mType.setText("(" + product.getType() + ")");
+        String type = "(" + product.getType() + ")";
+        holder.mType.setText(type);
 
         if (product.getId() == MONEY_DONATION) {
             holder.mQuantity.setVisibility(View.GONE);
