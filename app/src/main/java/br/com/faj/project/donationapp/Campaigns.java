@@ -158,9 +158,9 @@ public class Campaigns extends AppCompatActivity {
             float percentage = (float) jsonCampaign.getDouble("percentage");
 
 
-            if (type.equalsIgnoreCase("P")) {
+            if (type.equalsIgnoreCase("ProductCampaign")) {
                 c = new ProductCampaign(id, name, description, null, null, percentage);
-            } else if (type.equalsIgnoreCase("M")) {
+            } else if (type.equalsIgnoreCase("MoneyCampaign")) {
                 c = new MoneyCampaign(id, name, description, null, null, percentage);
             }
             campaigns.add(c);

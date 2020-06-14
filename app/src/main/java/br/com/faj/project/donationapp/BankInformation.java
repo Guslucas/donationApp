@@ -66,12 +66,7 @@ public class BankInformation extends AppCompatActivity {
         }
 
         String url = getResources().getString(R.string.url);
-        if (idCampaign == -1) {
-            url += "/product";
-        } else {
-            url += "/campaign/" + idCampaign + "/products";
-        }
-
+        url += "/donate";
         Log.i("URL sendo usada:", url);
 
         JSONObject json = null;
@@ -80,6 +75,8 @@ public class BankInformation extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        Log.i("JSON sendo usado:", json.toString());
 
         final JSONObject finalJson = json;
         StringRequest requestProducts = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

@@ -20,16 +20,17 @@ import java.util.TimeZone;
 public class DonationUtil {
     public JSONObject parseProductDonationToJSON(long idDonator, Long idCampaign, JSONArray items) throws JSONException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        //sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("date", sdf.format(new Date()));
-        jsonObject.put("donator", new JSONObject().put("id", idDonator));
+        jsonObject.put("donator", new JSONObject().put("id", idDonator).put("type", "Person"));
         if (idCampaign != -1) {
-            jsonObject.put("campaign", new JSONObject().put("id", idCampaign));
+            jsonObject.put("campaign", new JSONObject().put("id", idCampaign).put("type", "MoneyCampaign"));
         }
         jsonObject.put("items", items);
+        jsonObject.put("type", "ProductDonation");
 
         return jsonObject;
 
@@ -38,16 +39,17 @@ public class DonationUtil {
 
     public JSONObject parseMoneyDonationToJSON(long idDonator, Long idCampaign, float quantity) throws JSONException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        //sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("date", sdf.format(new Date()));
-        jsonObject.put("donator", new JSONObject().put("id", idDonator));
+        jsonObject.put("donator", new JSONObject().put("id", idDonator).put("type", "Person"));
         if (idCampaign != -1) {
-            jsonObject.put("campaign", new JSONObject().put("id", idCampaign));
+            jsonObject.put("campaign", new JSONObject().put("id", idCampaign).put("type", "MoneyCampaign"));
         }
         jsonObject.put("quantity", quantity);
+        jsonObject.put("type", "MoneyDonation");
 
         return jsonObject;
     }
