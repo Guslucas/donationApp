@@ -143,12 +143,14 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
     private void finishProductDonation() throws JSONException {
         final JSONArray itens = new JSONArray();
 
+        boolean hasAnyProduct = false;
+
         for (int i = 0; i < mProductRecycler.getChildCount(); i++) {
             ProductAdapter.ProductItemHolder holder = (ProductAdapter.ProductItemHolder) mProductRecycler.findViewHolderForAdapterPosition(i);
 
             int qtd = holder.mQuantity.getValue();
             if (qtd > 0) {
-
+                hasAnyProduct = true;
                 for (int j = 0; j < qtd; j++) {
                     Item item = new Item(mProductList.get(i));
                     itens.put(item.toJSON());
@@ -156,12 +158,13 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
             }
         }
 
-        String url = getResources().getString(R.string.url);
-        if (idCampaign == -1) {
-            url += "/donate";
-        } else {
-            url += "/campaign/" + idCampaign + "/donate";
+        if (!hasAnyProduct) {
+            showError("Nenhum produto selecionado");
+            return;
         }
+
+        String url = getResources().getString(R.string.url);
+        url += "/donate";
         Log.i("URL sendo usada", url);
 
         JSONObject json = null;
