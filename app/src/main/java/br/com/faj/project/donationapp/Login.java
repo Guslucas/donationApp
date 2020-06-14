@@ -212,6 +212,11 @@ public class Login extends AppCompatActivity {
 
     }
 
+    private  void testeCampanha(){
+        Intent intent =  new Intent(this, AddCampaignAdm.class);
+        startActivity(intent);
+    }
+
     private void testeProduct(){
         Intent intent =  new Intent(this, AddProductAdm.class);
         startActivity(intent);
@@ -266,6 +271,7 @@ public class Login extends AppCompatActivity {
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
+        testeCampanha();
         //testeProduct();
         //loginSuccess();
         //goToMessages();
