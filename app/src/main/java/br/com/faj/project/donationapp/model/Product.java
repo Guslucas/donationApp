@@ -6,12 +6,10 @@ public class Product {
     private long id;
     private String name;
     private String type;
-    private Bitmap image;
 
-    public Product(String name, long id, Bitmap image, String type) {
+    public Product(String name, long id, String type) {
         this.name = name;
         this.id = id;
-        this.image = image;
         this.type = type;
     }
 
@@ -25,9 +23,5 @@ public class Product {
 
     public String getType() {
         return type;
-    }
-
-    public Bitmap getImage() {
-        return image;
     }
 }

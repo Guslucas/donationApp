@@ -38,8 +38,8 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
         Product product = productList.get(position);
 
         holder.mName.setText(product.getName());
-        holder.mImage.setImageBitmap(product.getImage());
-        holder.mType.setText("(" + product.getType() + ")");
+        String type = "(" + product.getType() + ")";
+        holder.mType.setText(type);
 
         if (product.getId() == MONEY_DONATION) {
             holder.mQuantity.setVisibility(View.GONE);
@@ -54,7 +54,6 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
     }
 
     public class ProductItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView mImage;
         TextView mName;
         TextView mType;
         TextView mDescription;
@@ -62,7 +61,6 @@ class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductItemHold
 
         public ProductItemHolder(@NonNull View itemView) {
             super(itemView);
-            mImage = itemView.findViewById(R.id.imageView);
             mName = itemView.findViewById(R.id.nameTV);
             mDescription = itemView.findViewById(R.id.descriptionTV);
             mQuantity = itemView.findViewById(R.id.quantity);

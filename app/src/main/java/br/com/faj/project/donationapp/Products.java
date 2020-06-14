@@ -115,7 +115,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
             url += "/product";
         } else {
 
-            url += "/campaign/" + idCampaign + "/products";
+            url += "/campaign/" + idCampaign + "/product";
         }
 
         Log.i("URL sendo usada:", url);
@@ -234,14 +234,14 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
             long id = jsonProduct.getLong("id");
             String type = jsonProduct.getString("type");
             String name = jsonProduct.getString("name");
-            Product p = new Product(name, id, null, type);
+            Product p = new Product(name, id, type);
             products.add(p);
         }
 
         mProductList.clear();
 
         if (idCampaign == -1) {
-            mProductList.add(new Product("Dinheiro", 0, null, "R$"));
+            mProductList.add(new Product("Dinheiro", 0, "R$"));
         }
 
         mProductList.addAll(products);
