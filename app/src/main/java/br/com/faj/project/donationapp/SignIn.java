@@ -222,7 +222,7 @@ public class SignIn extends AppCompatActivity {
             loginInfoEditor.putLong("ID_DONATOR", id);
 
             String name;
-            if (object.getString("type").equalsIgnoreCase("Person")) {
+            if (object.getString("cpf") != null) {
                 name = object.getString("name");
             } else {
                 name = object.getString("companyName");
@@ -231,25 +231,14 @@ public class SignIn extends AppCompatActivity {
 
             loginInfoEditor.apply();
 
-            if (object.has("cpf")) {
-                Toast.makeText(this, "É uma pessoa.", Toast.LENGTH_SHORT).show();
-                //TODO gravar info da "sessão"
-
-            }else if (object.has("cnpj")) {
-                Toast.makeText(this, "É uma empresa.", Toast.LENGTH_SHORT).show();
-                //TODO gravar info da "sessão"
-            } else {
-                return;
-            }
-
-            goToCampaigns();
+            goToMenu();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void goToCampaigns() {
-        Intent i = new Intent(this, Campaigns.class);
+    private void goToMenu() {
+        Intent i = new Intent(this, Menu.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         ActivityCompat.finishAffinity(SignIn.this);

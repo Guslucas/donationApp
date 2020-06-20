@@ -46,7 +46,7 @@ class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.CampaignItemH
         holder.mProgressTV.setText(String.valueOf(Math.round(campaign.getPercentage())) + "%");
 
         Date endDate = campaign.getEndDate();
-        endDate = new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000));
+        endDate = new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000));
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

@@ -271,7 +271,7 @@ public class Login extends AppCompatActivity {
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
-        testeCampanha();
+        //testeCampanha();
         //testeProduct();
         //loginSuccess();
         //goToMessages();

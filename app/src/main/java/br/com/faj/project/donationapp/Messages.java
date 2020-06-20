@@ -84,7 +84,7 @@ public class Messages extends AppCompatActivity {
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            //getMessagesServer(s.toString());
+                            getMessagesServer(s.toString());
                         }
                     }, DELAY);
                 }
@@ -126,6 +126,7 @@ public class Messages extends AppCompatActivity {
         JSONObject json = new JSONObject();
         try {
             json.put("email",s);
+            json.put("type","Person");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -153,6 +154,8 @@ public class Messages extends AppCompatActivity {
                 return "application/json; charset=utf-8";
             }
         };
+
+        queue.add(messageRequest);
 
     }
 
@@ -190,7 +193,7 @@ public class Messages extends AppCompatActivity {
             String  content = jsonMessage.getString("content");
             //Date date = jsonMessage.getString();
             Donator idSender =  new Donator(jsonMessage.getJSONObject("sender").getLong("id"));
-            Donator idReciver = new Donator(jsonMessage.getJSONObject("reciver").getLong("id"));
+            Donator idReciver = new Donator(jsonMessage.getJSONObject("receiver").getLong("id"));
 
             m = new Message(id, content, null, idSender, idReciver);
 
@@ -225,7 +228,6 @@ public class Messages extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     //listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
-                    showError("Adicionado?");
                 } catch (Exception e) {
                     showError(e);
                 }
