@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -46,24 +47,32 @@ class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.CampaignItemH
         holder.mProgressTV.setText(String.valueOf(Math.round(campaign.getPercentage())) + "%");
 
         Date endDate = campaign.getEndDate();
-        endDate = new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000));
+        //endDate = new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000));
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
 
-
-        long diff = endDate.getTime() - (new Date().getTime());
+        long diff = 0;
+        try {
+            diff = endDate.getTime() - (sdf.parse(sdf.format(new Date()))).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         int diffDays = (int) diff / (24 * 60 * 60 * 1000);
 
         int argb = 0;
         if (diffDays <= 7) {
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 argb = callingActivity.getResources().getColor(R.color.design_default_color_error, null);
+            } else {
+                argb = Color.RED;
             }
-            diffDays = (diffDays == 0) ? 1 : diffDays;
-            holder.mDate.setText(String.valueOf("Termina em " + diffDays + " dia" + ((diffDays > 1) ? "s" : "") + "!"));
+
+            if (diffDays == 0) {
+                holder.mDate.setText(String.valueOf("Termina hoje!"));
+            } else {
+                holder.mDate.setText(String.valueOf("Termina em " + diffDays + " dia" + ((diffDays > 1) ? "s" : "") + "!"));
+            }
         } else {
             holder.mDate.setText("Termina em " + sdf.format(endDate));
             argb = Color.BLACK;

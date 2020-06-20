@@ -30,8 +30,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import br.com.faj.project.donationapp.model.Campaign;
 import br.com.faj.project.donationapp.model.MoneyCampaign;
@@ -150,18 +154,31 @@ public class Campaigns extends AppCompatActivity {
             JSONObject jsonCampaign = campaignsArray.getJSONObject(i);
             String type = jsonCampaign.getString("type");
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
             long id = jsonCampaign.getLong("id");
             String name = jsonCampaign.getString("name");
             String description = jsonCampaign.getString("description");
-            String startDate = jsonCampaign.getString("startDate");
-            String endDate = jsonCampaign.getString("endDate");
+            String startDateString = jsonCampaign.getString("startDate");
+            String endDateString = jsonCampaign.getString("endDate");
+            Date startDate;
+            Date endDate;
+            try {
+                startDate = sdf.parse(startDateString);
+                endDate = sdf.parse(endDateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                // Se deu erro em alguma campanha, apenas ignora ela
+                continue;
+            }
+
             float percentage = (float) jsonCampaign.getDouble("percentage");
 
 
             if (type.equalsIgnoreCase("ProductCampaign")) {
-                c = new ProductCampaign(id, name, description, null, null, percentage);
+                c = new ProductCampaign(id, name, description, startDate, endDate, percentage);
             } else if (type.equalsIgnoreCase("MoneyCampaign")) {
-                c = new MoneyCampaign(id, name, description, null, null, percentage);
+                c = new MoneyCampaign(id, name, description, startDate, endDate, percentage);
             }
             campaigns.add(c);
 
