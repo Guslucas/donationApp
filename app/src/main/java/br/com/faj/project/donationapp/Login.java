@@ -58,9 +58,9 @@ public class Login extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        loginIL = findViewById(R.id.loginInputLayout);
+        loginIL = findViewById(R.id.qtdInputLayout);
         passwordIL = findViewById(R.id.passwordInputLayout);
-        loginET = findViewById(R.id.loginEditText);
+        loginET = findViewById(R.id.qtdEditText);
         passwordET = findViewById(R.id.passwordEditText);
 
         loginLayout = findViewById(R.id.loginLayout);
@@ -271,7 +271,7 @@ public class Login extends AppCompatActivity {
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
-        //testeCampanha();
+        testeCampanha();
         //testeProduct();
         //loginSuccess();
         //goToMessages();
