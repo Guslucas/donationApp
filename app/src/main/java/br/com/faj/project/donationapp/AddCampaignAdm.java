@@ -150,16 +150,6 @@ public class AddCampaignAdm extends AppCompatActivity {
         url += "/campaign";
         Log.i("URL sendo usada", url);
 
-        if (isMonetary) {
-
-            jsonObject.put("objetivo", objetivoET.getText().toString());
-        } else {
-
-            //todo fazer doação produtária
-        }
-
-        final String campaign = jsonObject.toString();
-
         final StringRequest campaignRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -302,7 +292,13 @@ public class AddCampaignAdm extends AppCompatActivity {
             }
         }
         System.out.println(jsonObject.toString());
-        addCampaign(jsonObject);
+        try {
+            addCampaign(jsonObject);
+        } catch (Exception e) {
+            showError("Erro inesperado.");
+            e.printStackTrace();
+            return;
+        }
     }
 
     private void loadProducts() {
