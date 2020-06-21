@@ -21,13 +21,12 @@
         android:id="@+id/buttonTransferir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:onClick="transferir"
         android:text="Transferir"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358"
+        app:layout_constraintTop_toBottomOf="@+id/valorInputLayout"
         app:textAllCaps="false" />
 
     <Button
@@ -35,13 +34,12 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:onClick="gerarBoleto"
         android:text="Gerar Boleto"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTransferir"
-        app:layout_constraintVertical_bias="0.053"
         app:textAllCaps="false" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -53,16 +51,17 @@
         android:layout_marginTop="150dp"
         android:layout_marginEnd="50dp"
         android:hint="@string/valor"
-        app:prefixText="@string/RS"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:prefixText="@string/RS">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/valorEditText"
-            android:inputType="number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal">
 
         </com.google.android.material.textfield.TextInputEditText>
 
