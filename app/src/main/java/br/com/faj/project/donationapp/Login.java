@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -224,8 +225,9 @@ public class Login extends AppCompatActivity {
 
     private void loginSuccess() {
         // Código usado para testes
-        Intent i = new Intent(this, Menu.class);
-        startActivity(i);
+        Intent intent = new Intent(getApplicationContext(), Menu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void showError(Exception e) {
@@ -273,6 +275,17 @@ public class Login extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void checkAdm(){
+
+        if(loginET.getText().toString().equals("adm@gmail.com") && passwordET.getText().toString().equals("admin")){
+
+            Intent intent = new Intent(getApplicationContext(), MenuAdm.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+
+    }
+
     public void login(View v) {
 
         //TODO TRAVA APENAS PARA TESTES
@@ -284,8 +297,8 @@ public class Login extends AppCompatActivity {
         //goToBankInformation();
         //goToProducts();
         //goToMenu();
-        goToLeaderboard();
-        finish();
+        //goToLeaderboard();
+        //finish();
 
 
         boolean error = false;
@@ -306,6 +319,8 @@ public class Login extends AppCompatActivity {
         if (error) {
             return;
         }
+
+        checkAdm();
 
         loginServer(login, password);
     }

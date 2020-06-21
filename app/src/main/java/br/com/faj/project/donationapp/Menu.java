@@ -82,10 +82,6 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
                 finish();
                 return;
         }
-
-
         startActivity(i);
-
-
     }
 }

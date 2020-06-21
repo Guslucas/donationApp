@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Leaderboard"></activity>
+        <activity android:name=".MenuAdm"></activity>
+        <activity android:name=".Leaderboard" />
         <activity android:name=".AddCampaignAdm" />
         <activity android:name=".AddProductAdm" />
         <activity android:name=".Menu" />
