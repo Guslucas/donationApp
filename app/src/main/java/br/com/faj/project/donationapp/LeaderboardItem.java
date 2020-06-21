@@ -1,12 +1,12 @@
 package br.com.faj.project.donationapp;
 
 class LeaderboardItem {
-    private int id;
+    private long donatorId;
     private String name;
     private int quantitydDonation;
 
-    public LeaderboardItem(int id, String name, int quantitydDonation) {
-        this.id = id;
+    public LeaderboardItem(long donatorId, String name, int quantitydDonation) {
+        this.donatorId = donatorId;
         this.name = name;
         this.quantitydDonation = quantitydDonation;
     }
@@ -16,8 +16,8 @@ class LeaderboardItem {
         this.quantitydDonation = quantitydDonation;
     }
 
-    public int getId() {
-        return id;
+    public long getDonatorId() {
+        return donatorId;
     }
 
     public String getName() {

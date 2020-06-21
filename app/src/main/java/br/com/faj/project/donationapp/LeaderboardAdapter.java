@@ -1,7 +1,5 @@
 package br.com.faj.project.donationapp;
 
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -13,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.resources.MaterialResources;
 
 import java.util.List;
 
@@ -69,7 +65,7 @@ class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.Leaderb
 
         holder.mNameTV.setText(item.getName());
         holder.mQuantity.setText(String.valueOf(item.getQuantitydDonation()));
-        if (item.getId() == donatorId) {
+        if (item.getDonatorId() == donatorId) {
             View itemView = holder.itemView;
             CardView viewById = itemView.findViewById(R.id.card);
             //viewById.setCardBackgroundColor(Color.argb(100, 100, 25, 100));
