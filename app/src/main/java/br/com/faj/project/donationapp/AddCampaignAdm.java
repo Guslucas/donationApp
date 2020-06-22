@@ -153,15 +153,25 @@ public class AddCampaignAdm extends AppCompatActivity {
         final StringRequest campaignRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
-                nomeET.setText("");
-                descricaoET.setText("");
-                inicioET.setText("");
-                fimET.setText("");
-                objetivoET.setText("");
+                    if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
+                        showError(jsonResponse.getString("errorMessage"));
+                        return;
+                    }
 
-                Snackbar.make(addCampaignLayout, "Campanha adicionada com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
+                    nomeET.setText("");
+                    descricaoET.setText("");
+                    inicioET.setText("");
+                    fimET.setText("");
+                    objetivoET.setText("");
 
+                    Snackbar.make(addCampaignLayout, "Campanha adicionada com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    showError(e);
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -223,10 +233,10 @@ public class AddCampaignAdm extends AppCompatActivity {
             String dataInicioSv = sdfServer.format(dataInicio);
             String dataFimSv = sdfServer.format(dataFIm);
 
-            jsonObject.put("nome", nomeET.getText().toString());
-            jsonObject.put("descricao", descricaoET.getText().toString());
-            jsonObject.put("inicio", dataInicioSv);
-            jsonObject.put("fim", dataFimSv);
+            jsonObject.put("name", nomeET.getText().toString());
+            jsonObject.put("description", descricaoET.getText().toString());
+            jsonObject.put("startDate", dataInicioSv);
+            jsonObject.put("endDate", dataFimSv);
         } catch (JSONException e) {
             e.printStackTrace();
             showError("Erro inesperado.");

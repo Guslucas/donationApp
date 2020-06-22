@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.nio.charset.StandardCharsets;
 
@@ -58,10 +59,21 @@ public class AddProductAdm extends AppCompatActivity {
         final StringRequest productRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
-                productNameET.setText("");
-                typeET.setText("");
-                Snackbar.make(addProductLayout, "Produto adicionado com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
+                    if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
+                        showError(jsonResponse.getString("errorMessage"));
+                        return;
+                    }
+
+                    productNameET.setText("");
+                    typeET.setText("");
+                    Snackbar.make(addProductLayout, "Produto adicionado com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    showError(e);
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
