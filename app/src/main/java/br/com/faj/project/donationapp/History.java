@@ -23,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,11 +46,6 @@ public class History extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
 
-        mHistoryItems.add(new HistoryItem(null, "P"));
-        mHistoryItems.add(new HistoryItem(null, "P"));
-        mHistoryItems.add(new HistoryItem(null, "M"));
-        mHistoryItems.add(new HistoryItem(null, "M"));
-
         mHistoryLayout = findViewById(R.id.historyLayout);
         mHistoryRecycler = findViewById(R.id.historyRecycler);
 
@@ -56,13 +53,12 @@ public class History extends AppCompatActivity {
         mHistoryRecycler.setLayoutManager(new LinearLayoutManager(this));
         mHistoryRecycler.setAdapter(mHistoryAdapter);
         mHistoryRecycler.setItemAnimator(new DefaultItemAnimator());
-        //loadItems();
-
+        loadItems();
     }
 
     private void loadItems() {
         String url = getResources().getString(R.string.url);
-        url += "/donator/" + 66 + "/history";
+        url += "/donator/" + 66 + "/donation";
         Log.i("URL sendo usada", url);
 
         StringRequest leaderboardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -99,11 +95,22 @@ public class History extends AppCompatActivity {
         JSONArray itemListJson = jsonResponse.getJSONArray("object");
         for (int i = 0; i < itemListJson.length(); i++) {
             JSONObject item = itemListJson.getJSONObject(i);
-            //Date date = item.getString("date");
+            String dateString = item.getString("date");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+            Date date;
+            try {
+                date = sdf.parse(dateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                continue;
+            }
+
             String type = item.getString("type");
 
-            HistoryItem leaderboardItem = new HistoryItem(null, type);
-            itemList.add(leaderboardItem);
+            HistoryItem historyItem = new HistoryItem(date, type);
+            itemList.add(historyItem);
         }
 
         mHistoryItems.clear();

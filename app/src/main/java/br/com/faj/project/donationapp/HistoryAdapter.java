@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryItemHolder> {
@@ -36,7 +37,10 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryItemHold
     @Override
     public void onBindViewHolder(@NonNull HistoryItemHolder holder, int position) {
         HistoryItem item = itemList.get(position);
-        holder.mDate.setText("--/--/----");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        holder.mDate.setText(sdf.format(item.getDate()));
         holder.mType.setText(item.getType());
     }
 
