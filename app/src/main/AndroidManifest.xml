@@ -15,6 +15,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".MenuAdm"></activity>
         <activity android:name=".Leaderboard" />
+        <activity android:name=".History" />
         <activity android:name=".AddCampaignAdm" />
         <activity android:name=".AddProductAdm" />
         <activity android:name=".Menu" />

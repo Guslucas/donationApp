@@ -93,7 +93,7 @@ class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.Leaderb
 
         public LeaderboardItemHolder(@NonNull View itemView) {
             super(itemView);
-            mNameTV = itemView.findViewById(R.id.name);
+            mNameTV = itemView.findViewById(R.id.nomeTV);
             mQuantity = itemView.findViewById(R.id.qtdDonations);
             mCrownIV = itemView.findViewById(R.id.crownIV);
         }

@@ -21,34 +21,24 @@
             android:orientation="horizontal"
             android:padding="20dp">
 
-            <ImageView
-                android:id="@+id/crownIV"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:paddingBottom="6dp"
-                android:tint="@android:color/holo_orange_light"
-                app:srcCompat="@drawable/crown2" />
-
             <TextView
-                android:id="@+id/nomeTV"
+                android:id="@+id/tipoDonation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="8"
-                android:text="Nome Usuario"
+                android:layout_weight="6"
+                android:text="Tipo"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/qtdDonations"
+                android:id="@+id/dataDonation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:text="Qtd"
+                android:layout_weight="4"
+                android:text="Data"
                 android:textSize="20sp" />
 
         </LinearLayout>
