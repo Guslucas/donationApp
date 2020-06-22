@@ -61,8 +61,7 @@ public class Leaderboard extends AppCompatActivity {
 
     private void loadItems() {
         String url = getResources().getString(R.string.url);
-        //url += "/leaderboard";
-        url += "/leaderboard.json";
+        url += "/leaderboard";
         Log.i("URL sendo usada", url);
 
         StringRequest leaderboardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -99,9 +98,9 @@ public class Leaderboard extends AppCompatActivity {
         JSONArray itemListJson = jsonResponse.getJSONArray("object");
         for (int i = 0; i < itemListJson.length(); i++) {
             JSONObject item = itemListJson.getJSONObject(i);
-            long idDonator = item.getLong("idDonator");
+            long idDonator = item.getLong("donatorId");
             String name = item.getString("name");
-            int quantitydDonation = item.getInt("quantityDonation");
+            int quantitydDonation = item.getInt("quantitydDonation");
 
             LeaderboardItem leaderboardItem = new LeaderboardItem(idDonator, name, quantitydDonation);
             itemList.add(leaderboardItem);

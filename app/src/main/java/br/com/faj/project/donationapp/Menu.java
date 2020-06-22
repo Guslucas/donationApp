@@ -69,9 +69,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
                 //i.setClass(this, .class);
                 return;
             case R.id.leaderboardMenuButton:
-                Snackbar.make(v, "Action not implemented yet.", BaseTransientBottomBar.LENGTH_SHORT).show();
-                //i.setClass(this, .class);
-                return;
+                i.setClass(this, Leaderboard.class);
+                break;
             case R.id.cnpjMenuButton:
                 i.setClass(this, BarCode.class);
                 break;
