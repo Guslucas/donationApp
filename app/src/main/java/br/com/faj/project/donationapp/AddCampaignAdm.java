@@ -63,6 +63,7 @@ public class AddCampaignAdm extends AppCompatActivity {
     TextInputLayout objetivoIL;
 
     LinearLayout objectivesLayout;
+    LinearLayout objectivesLayoutParent;
     Button addObjectiveBtn;
     List<String> mProductsNames = new ArrayList<>();
     ArrayAdapter<String> spinnerAdapter;
@@ -93,6 +94,7 @@ public class AddCampaignAdm extends AppCompatActivity {
 
         spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mProductsNames);
         objectivesLayout = findViewById(R.id.objectivesLayout);
+        objectivesLayoutParent = findViewById(R.id.objectivesLayoutParent);
         addObjectiveBtn = findViewById(R.id.addObjectiveBtn);
         addObjectiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,12 +134,12 @@ public class AddCampaignAdm extends AppCompatActivity {
 
                     //objetivoIL.setEnabled(true);
                     objetivoIL.setVisibility(View.VISIBLE);
-                    objectivesLayout.setVisibility(View.GONE);
+                    objectivesLayoutParent.setVisibility(View.GONE);
 
                 } else {
                     //objetivoIL.setEnabled(false);
                     objetivoIL.setVisibility(View.GONE);
-                    objectivesLayout.setVisibility(View.VISIBLE);
+                    objectivesLayoutParent.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -166,6 +168,7 @@ public class AddCampaignAdm extends AppCompatActivity {
                     inicioET.setText("");
                     fimET.setText("");
                     objetivoET.setText("");
+                    objectivesLayout.removeAllViews();
 
                     Snackbar.make(addCampaignLayout, "Campanha adicionada com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
                 } catch (Exception e) {
