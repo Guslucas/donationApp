@@ -58,10 +58,10 @@ class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.CampaignItemH
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int diffDays = (int) diff / (24 * 60 * 60 * 1000);
+        int diffDays = (int) (diff / (24 * 60 * 60 * 1000));
 
         int argb = 0;
-        if (diffDays <= 7) {
+        if (diffDays <= 5) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 argb = callingActivity.getResources().getColor(R.color.design_default_color_error, null);
             } else {
