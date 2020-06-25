@@ -2,6 +2,7 @@ package br.com.faj.project.donationapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -31,7 +32,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,7 +55,10 @@ public class Messages extends AppCompatActivity {
 
     private Timer timer = new Timer();
     private final long DELAY = 1000;
+    private boolean hasUser = false;
 
+    private CountDownTimer messageRefreshTimer;
+    private String user = "NULL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,9 @@ public class Messages extends AppCompatActivity {
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            getMessagesServer(s.toString());
+                            user = s.toString();
+                            getMessagesServer(user);
+                            hasUser = true;
                         }
                     }, DELAY);
                 }
@@ -115,7 +120,32 @@ public class Messages extends AppCompatActivity {
         messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
         messagesRecycler.setAdapter(messagesAdapter);
 
+        messageRefreshTimer = new CountDownTimer(5000, 20) {
 
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                try{
+                    yourMethod();
+                }catch(Exception e){
+                    Log.e("Error", "Error: " + e.toString());
+                }
+            }
+        }.start();
+
+    }
+
+    private void yourMethod() {
+
+        if (hasUser) {
+            getMessagesServer(user);
+        }
+
+        messageRefreshTimer.start();
     }
 
     private void getMessagesServer(String s) {
@@ -138,8 +168,10 @@ public class Messages extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
+
                 } catch (Exception e) {
                     showError(e);
+                    hasUser = false;
                 }
 
             }
@@ -162,10 +194,16 @@ public class Messages extends AppCompatActivity {
     public void sendMessage(View view) throws JSONException {
         String email = personET.getText().toString();
         String message = newMessageET.getText().toString();
-        if (email.trim().isEmpty() || message.trim().isEmpty()) {
+        if (email.trim().isEmpty()) {
             showError("O usuário não pode estar vazio");
             return;
         }
+
+        if (message.trim().isEmpty()) {
+            showError("A mensagem não pode estar vazia");
+            return;
+        }
+
         mMessagesList.add(new Message(message, new Person(donatorId), new Person(-10))); //TODO REMOVER DEPOIS DE TESTADO
         messagesAdapter.notifyDataSetChanged();
         messagesRecycler.scrollToPosition(mMessagesList.size() - 1);
@@ -203,7 +241,8 @@ public class Messages extends AppCompatActivity {
         mMessagesList.clear();
         mMessagesList.addAll(messages);
         messagesAdapter.notifyDataSetChanged();
-
+        messagesRecycler.scrollToPosition(mMessagesList.size() - 1);
+        hasUser = true;
     }
 
     private void sendMessageServer() throws JSONException {
