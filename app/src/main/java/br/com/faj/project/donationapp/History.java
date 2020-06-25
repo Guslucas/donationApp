@@ -1,5 +1,6 @@
 package br.com.faj.project.donationapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,9 @@ public class History extends AppCompatActivity {
 
     private List<HistoryItem> mHistoryItems = new ArrayList<>();
 
+    private SharedPreferences loginInfoSP;
+    private long donatorId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +57,24 @@ public class History extends AppCompatActivity {
         mHistoryRecycler.setLayoutManager(new LinearLayoutManager(this));
         mHistoryRecycler.setAdapter(mHistoryAdapter);
         mHistoryRecycler.setItemAnimator(new DefaultItemAnimator());
+
+        loginInfoSP = getSharedPreferences("loginInfo", MODE_PRIVATE);
+        donatorId = loginInfoSP.getLong("ID_DONATOR", -1);
+
         loadItems();
+
+        Log.i("ID_USUARIO", String.valueOf(donatorId));
+
+        if (donatorId == -1) try {
+            throw new Exception("Donator invalido");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadItems() {
         String url = getResources().getString(R.string.url);
-        url += "/donator/" + 66 + "/donation";
+        url += "/donator/" + donatorId + "/donation";
         Log.i("URL sendo usada", url);
 
         StringRequest leaderboardRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

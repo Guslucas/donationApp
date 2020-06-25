@@ -222,7 +222,7 @@ public class SignIn extends AppCompatActivity {
             loginInfoEditor.putLong("ID_DONATOR", id);
 
             String name;
-            if (object.getString("cpf") != null) {
+            if (object.has("cpf")) {
                 name = object.getString("name");
             } else {
                 name = object.getString("companyName");
