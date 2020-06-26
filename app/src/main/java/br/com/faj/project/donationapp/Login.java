@@ -114,8 +114,8 @@ public class Login extends AppCompatActivity {
         verifyPreviousLogin();
 
         //TODO para facilitar o login, retirar depois
-        loginET.setText("contato@google.com");
-        passwordET.setText("333");
+        //loginET.setText("contato@google.com");
+        //passwordET.setText("333");
 
     }
 

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,12 +37,26 @@ public class Leaderboard extends AppCompatActivity {
 
     private List<LeaderboardItem> mLeaderboardItems = new ArrayList<>();
 
+    private SharedPreferences loginInfoSP;
+    private long donatorId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
 
         queue = Volley.newRequestQueue(this);
+
+        loginInfoSP = getSharedPreferences("loginInfo", MODE_PRIVATE);
+        donatorId = loginInfoSP.getLong("ID_DONATOR", -1);
+
+        Log.i("ID_USUARIO", String.valueOf(donatorId));
+
+        if (donatorId == -1) try {
+            throw new Exception("Donator invalido");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         /*mLeaderboardItems.add(new LeaderboardItem(66, "Google", 28));
         mLeaderboardItems.add(new LeaderboardItem("Marquinho", 19));
@@ -51,7 +66,7 @@ public class Leaderboard extends AppCompatActivity {
         mLeaderboardLayout = findViewById(R.id.historyLayout);
         mLeaderboardRecycler = findViewById(R.id.historyRecycler);
 
-        mLeaderboardAdapter = new LeaderboardAdapter(mLeaderboardItems, this, 66);
+        mLeaderboardAdapter = new LeaderboardAdapter(mLeaderboardItems, this, donatorId);
         mLeaderboardRecycler.setLayoutManager(new LinearLayoutManager(this));
         mLeaderboardRecycler.setAdapter(mLeaderboardAdapter);
         mLeaderboardRecycler.setItemAnimator(new DefaultItemAnimator());

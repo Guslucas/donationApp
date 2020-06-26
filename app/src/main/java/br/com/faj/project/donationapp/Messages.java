@@ -216,6 +216,8 @@ public class Messages extends AppCompatActivity {
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
             showError(jsonObject.getString("errorMessage"));
+            mMessagesList.clear();
+            messagesAdapter.notifyDataSetChanged();
             return;
         }
 
