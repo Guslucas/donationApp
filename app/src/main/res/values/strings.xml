@@ -4,4 +4,37 @@
     <string name="login">Login</string>
     <string name="nao_possui_uma_conta">Não possui uma conta?</string>
     <string name="crie_uma_gratuitamente">Crie uma gratuitamente.</string>
+    <string name="endereco">Endereço</string>
+    <string name="cep">CEP</string>
+    <string name="bairro">Bairro</string>
+    <string name="rua_avenida">Rua/avenida</string>
+    <string name="n_mero">Número</string>
+    <string name="complemento">Complemento</string>
+    <string name="cidade">Cidade</string>
+    <string name="estado">Estado</string>
+    <string name="title_activity_campaigns">Campaigns</string>
+    <string name="title_activity_campaign">Campaign</string>
+    <string name="data_de_nascimento">Data de Nascimento</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="nome">Nome</string>
+    <string name="cpf">CPF</string>
+    <string name="fisica">Física</string>
+    <string name="razao_social">Razão Social</string>
+    <string name="cnpj">CNPJ</string>
+    <string name="data_de_fundacao">Data de Fundação</string>
+    <string name="juridica">Júridica</string>
+    <string name="quanto">Quanto ?</string>
+    <string name="gerar_boleto">Gerar Boleto</string>
+    <string name="transferir">Transferir</string>
+    <string name="valor">Valor</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="email">Email</string>
+    <string name="telefone">Telefone</string>
+    <string name="senha">Senha</string>
+    <string name="confirmar_senha">Confirmar Senha</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="RS">R$</string>
+    <string name="bio">Bio</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>
