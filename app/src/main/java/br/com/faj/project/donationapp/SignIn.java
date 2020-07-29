@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +48,7 @@ public class SignIn extends AppCompatActivity {
 
     RequestQueue queue;
 
+    SnackbarUtil snackbarUtil;
     ConstraintLayout constraintLayout;
 
     SharedPreferences loginInfoSP;
@@ -80,6 +78,7 @@ public class SignIn extends AppCompatActivity {
         titleTV.setText(titulos.get(telaAtual));
 
         constraintLayout = findViewById(R.id.constraintLayout);
+        snackbarUtil = new SnackbarUtil(constraintLayout);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -190,7 +189,7 @@ public class SignIn extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         }) {
             @Override
@@ -212,7 +211,7 @@ public class SignIn extends AppCompatActivity {
             System.out.println(response);
             JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
             if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
-                showError(jsonObject.getString("errorMessage"));
+                snackbarUtil.showError(jsonObject.getString("errorMessage"));
                 return;
             }
 
@@ -244,13 +243,5 @@ public class SignIn extends AppCompatActivity {
         ActivityCompat.finishAffinity(SignIn.this);
     }
 
-    private void showError(Exception e) {
-        Snackbar.make(constraintLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String e) {
-        Snackbar.make(constraintLayout, e, BaseTransientBottomBar.LENGTH_SHORT).show();
-    }
 }
 

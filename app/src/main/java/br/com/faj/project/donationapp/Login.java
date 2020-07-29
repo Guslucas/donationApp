@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,8 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
@@ -43,6 +40,7 @@ public class Login extends AppCompatActivity {
     SharedPreferences loginInfoSP;
     SharedPreferences.Editor loginInfoEditor;
 
+    SnackbarUtil snackbarUtil;
     ConstraintLayout loginLayout;
 
     @Override
@@ -65,6 +63,7 @@ public class Login extends AppCompatActivity {
         passwordET = findViewById(R.id.passwordEditText);
 
         loginLayout = findViewById(R.id.loginLayout);
+        snackbarUtil = new SnackbarUtil(loginLayout);
 
         loginET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -147,13 +146,13 @@ public class Login extends AppCompatActivity {
                 try {
                     responseLogIn(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         }) {
             @Override
@@ -170,7 +169,7 @@ public class Login extends AppCompatActivity {
                     loginESenha.put("password", password);
                     loginESenha.put("type", "Person");
                 } catch (JSONException e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
 
                 return loginESenha.toString().getBytes(StandardCharsets.UTF_8);
@@ -186,7 +185,7 @@ public class Login extends AppCompatActivity {
         JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
         if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonResponse.getString("errorMessage"));
+            snackbarUtil.showError(jsonResponse.getString("errorMessage"));
             return;
         }
 
@@ -228,15 +227,6 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Menu.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-    }
-
-    private void showError(Exception e) {
-        Snackbar.make(loginLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String e) {
-        Snackbar.make(loginLayout, e, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     private void validate(String s) throws IllegalArgumentException {
