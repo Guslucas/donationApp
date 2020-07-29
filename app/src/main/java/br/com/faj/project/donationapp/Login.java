@@ -12,7 +12,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -161,7 +160,7 @@ public class Login extends AppCompatActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
 
                 JSONObject loginESenha = new JSONObject();
                 try {
@@ -212,16 +211,6 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private  void testeCampanha(){
-        Intent intent =  new Intent(this, AddCampaignAdm.class);
-        startActivity(intent);
-    }
-
-    private void testeProduct(){
-        Intent intent =  new Intent(this, AddProductAdm.class);
-        startActivity(intent);
-    }
-
     private void loginSuccess() {
         // Código usado para testes
         Intent intent = new Intent(getApplicationContext(), Menu.class);
@@ -233,36 +222,6 @@ public class Login extends AppCompatActivity {
         if (s.trim().equals("")) {
             throw new IllegalArgumentException("O campo não pode ser vazio.");
         }
-    }
-
-    public void goToMessages() {
-        Intent i = new Intent(this, Messages.class);
-        startActivity(i);
-    }
-
-    public void goToBarCode() {
-        Intent i = new Intent(this, BarCode.class);
-        startActivity(i);
-    }
-
-    public void goToBankInformation() {
-        Intent i = new Intent(this, BankInformation.class);
-        startActivity(i);
-    }
-
-    public void goToProducts() {
-        Intent i = new Intent(this, Products.class);
-        startActivity(i);
-    }
-
-    private void goToMenu() {
-        Intent i = new Intent(this, Menu.class);
-        startActivity(i);
-    }
-
-    private void goToLeaderboard() {
-        Intent i = new Intent(this, Leaderboard.class);
-        startActivity(i);
     }
 
     private void checkAdm(){
@@ -277,20 +236,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View v) {
-
-        //TODO TRAVA APENAS PARA TESTES
-        //testeCampanha();
-        //testeProduct();
-        //loginSuccess();
-        //goToMessages();
-        //goToBarCode();
-        //goToBankInformation();
-        //goToProducts();
-        //goToMenu();
-        //goToLeaderboard();
-        //finish();
-
-
         boolean error = false;
 
         String login = loginET.getText().toString();
