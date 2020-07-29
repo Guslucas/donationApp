@@ -32,6 +32,7 @@ public class Leaderboard extends AppCompatActivity {
     private RecyclerView mLeaderboardRecycler;
     private LeaderboardAdapter mLeaderboardAdapter;
     private View mLeaderboardLayout;
+    private SnackbarUtil snackbarUtil;
 
     private RequestQueue queue;
 
@@ -64,6 +65,7 @@ public class Leaderboard extends AppCompatActivity {
         mLeaderboardItems.add(new LeaderboardItem("Katchau", 9));*/
 
         mLeaderboardLayout = findViewById(R.id.historyLayout);
+        snackbarUtil = new SnackbarUtil(mLeaderboardLayout);
         mLeaderboardRecycler = findViewById(R.id.historyRecycler);
 
         mLeaderboardAdapter = new LeaderboardAdapter(mLeaderboardItems, this, donatorId);
@@ -85,13 +87,13 @@ public class Leaderboard extends AppCompatActivity {
                 try {
                     responseLeaderboard(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         });
 
@@ -104,7 +106,7 @@ public class Leaderboard extends AppCompatActivity {
         JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
         if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonResponse.getString("errorMessage"));
+            snackbarUtil.showError(jsonResponse.getString("errorMessage"));
             return;
         }
 
@@ -124,14 +126,5 @@ public class Leaderboard extends AppCompatActivity {
         mLeaderboardItems.clear();
         mLeaderboardItems.addAll(itemList);
         mLeaderboardAdapter.notifyDataSetChanged();
-    }
-
-    private void showError(Exception e) {
-        Snackbar.make(mLeaderboardLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(mLeaderboardLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 }

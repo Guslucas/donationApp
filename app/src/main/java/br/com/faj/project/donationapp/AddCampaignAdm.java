@@ -44,6 +44,7 @@ import br.com.faj.project.donationapp.model.Product;
 public class AddCampaignAdm extends AppCompatActivity {
 
     private ConstraintLayout addCampaignLayout;
+    private SnackbarUtil snackbarUtil;
 
     SwitchMaterial campaignTypeSwitch;
 
@@ -76,6 +77,7 @@ public class AddCampaignAdm extends AppCompatActivity {
         setContentView(R.layout.activity_add_campaign_adm);
 
         addCampaignLayout = findViewById(R.id.addCampaignLayout);
+        snackbarUtil = new SnackbarUtil(addCampaignLayout);
 
         queue = Volley.newRequestQueue(this);
 
@@ -159,7 +161,7 @@ public class AddCampaignAdm extends AppCompatActivity {
                     JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
                     if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
-                        showError(jsonResponse.getString("errorMessage"));
+                        snackbarUtil.showError(jsonResponse.getString("errorMessage"));
                         return;
                     }
 
@@ -172,14 +174,14 @@ public class AddCampaignAdm extends AppCompatActivity {
 
                     Snackbar.make(addCampaignLayout, "Campanha adicionada com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         }) {
 
@@ -195,16 +197,6 @@ public class AddCampaignAdm extends AppCompatActivity {
         };
 
         queue.add(campaignRequest);
-    }
-
-
-    private void showError(Exception e) {
-        Snackbar.make(addCampaignLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(addCampaignLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     public void adicionar(View view) {
@@ -242,7 +234,7 @@ public class AddCampaignAdm extends AppCompatActivity {
             jsonObject.put("endDate", dataFimSv);
         } catch (JSONException e) {
             e.printStackTrace();
-            showError("Erro inesperado.");
+            snackbarUtil.showError("Erro inesperado.");
             return;
         }
 
@@ -256,14 +248,14 @@ public class AddCampaignAdm extends AppCompatActivity {
                 jsonObject.put("goal", goal);
             } catch (JSONException e) {
                 e.printStackTrace();
-                showError("Erro inesperado.");
+                snackbarUtil.showError("Erro inesperado.");
                 return;
             }
         } else {
             JSONArray objectives = new JSONArray();
             int qtdObjetivos = objectivesLayout.getChildCount();
             if (qtdObjetivos == 0) {
-                showError("Nenhum produto inserido.");
+                snackbarUtil.showError("Nenhum produto inserido.");
                 return;
             }
             for (int i = 0; i < qtdObjetivos; i++) {
@@ -300,7 +292,7 @@ public class AddCampaignAdm extends AppCompatActivity {
                 jsonObject.put("objectives", objectives);
             } catch (JSONException e) {
                 e.printStackTrace();
-                showError("Erro inesperado.");
+                snackbarUtil.showError("Erro inesperado.");
                 return;
             }
         }
@@ -308,7 +300,7 @@ public class AddCampaignAdm extends AppCompatActivity {
         try {
             addCampaign(jsonObject);
         } catch (Exception e) {
-            showError("Erro inesperado.");
+            snackbarUtil.showError("Erro inesperado.");
             e.printStackTrace();
             return;
         }
@@ -325,13 +317,13 @@ public class AddCampaignAdm extends AppCompatActivity {
                 try {
                     listProducts(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
                 error.printStackTrace();
             }
         });
@@ -343,7 +335,7 @@ public class AddCampaignAdm extends AppCompatActivity {
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonObject.getString("errorMessage"));
+            snackbarUtil.showError(jsonObject.getString("errorMessage"));
             return;
         }
 
