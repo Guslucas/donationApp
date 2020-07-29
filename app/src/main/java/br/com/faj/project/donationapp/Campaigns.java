@@ -48,6 +48,7 @@ public class Campaigns extends AppCompatActivity {
     CampaignAdapter mCampaignAdapter;
 
     RequestQueue queue;
+    SnackbarUtil snackbarUtil;
     private ConstraintLayout campaignsLayout;
 
     private SharedPreferences campaignInfo;
@@ -85,6 +86,7 @@ public class Campaigns extends AppCompatActivity {
         });
 
         campaignsLayout = findViewById(R.id.campaignsLayout);
+        snackbarUtil = new SnackbarUtil(campaignsLayout);
 
         campaignInfo = getSharedPreferences("campaignInfo", MODE_PRIVATE);
         campaignInfoEditor = campaignInfo.edit();
@@ -114,34 +116,24 @@ public class Campaigns extends AppCompatActivity {
                 try {
                     listCampaigns(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         });
 
         queue.add(requestCampaigns);
-
-        //TODO código apenas de teste
-        /* String jsonArray = "{\"status\":\"OK\", \"errorMessage\":null, \"object\":[{\"type\":\"ProductCampaign\",\"id\":1,\"name\":\"Prod Tranquilas\",\"description\":\"Ajude doando.\",\"startDate\":\"2020-04-25\",\"endDate\":\"2020-06-15\",\"percentage\":0.0},{\"type\":\"MoneyCampaign\",\"id\":2,\"name\":\"Money Tranquilas\",\"description\":\"Ajude doando.\",\"startDate\":\"2020-04-25\",\"endDate\":\"2020-06-15\",\"percentage\":0.0}]}";
-        try {
-            listCampaigns(jsonArray);
-        } catch (JSONException e) {
-            showError(e);
-            e.printStackTrace();
-        } */
-
     }
 
     public void listCampaigns(String response) throws JSONException {
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonObject.getString("errorMessage"));
+            snackbarUtil.showError(jsonObject.getString("errorMessage"));
             return;
         }
 
@@ -213,15 +205,5 @@ public class Campaigns extends AppCompatActivity {
             startActivity(i);
         }
 
-    }
-
-
-    private void showError(Exception e) {
-        Snackbar.make(campaignsLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(campaignsLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 }
