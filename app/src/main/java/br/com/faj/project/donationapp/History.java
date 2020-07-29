@@ -35,6 +35,7 @@ public class History extends AppCompatActivity {
     private RecyclerView mHistoryRecycler;
     private HistoryAdapter mHistoryAdapter;
     private View mHistoryLayout;
+    private SnackbarUtil snackbarUtil;
 
     private RequestQueue queue;
 
@@ -51,6 +52,7 @@ public class History extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         mHistoryLayout = findViewById(R.id.historyLayout);
+        snackbarUtil = new SnackbarUtil(mHistoryLayout);
         mHistoryRecycler = findViewById(R.id.historyRecycler);
 
         mHistoryAdapter = new HistoryAdapter(mHistoryItems, this, 66);
@@ -83,13 +85,13 @@ public class History extends AppCompatActivity {
                 try {
                     responseHistory(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         });
 
@@ -102,7 +104,7 @@ public class History extends AppCompatActivity {
         JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
         if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonResponse.getString("errorMessage"));
+            snackbarUtil.showError(jsonResponse.getString("errorMessage"));
             return;
         }
 
@@ -132,14 +134,5 @@ public class History extends AppCompatActivity {
         mHistoryItems.clear();
         mHistoryItems.addAll(itemList);
         mHistoryAdapter.notifyDataSetChanged();
-    }
-
-    private void showError(Exception e) {
-        Snackbar.make(mHistoryLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(mHistoryLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 }
