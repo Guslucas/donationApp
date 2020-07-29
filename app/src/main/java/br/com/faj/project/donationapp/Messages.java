@@ -46,6 +46,7 @@ public class Messages extends AppCompatActivity {
 
     private List<Message> mMessagesList = new ArrayList<>();
     private RecyclerView messagesRecycler;
+    private SnackbarUtil snackbarUtil;
     private MessagesAdapter messagesAdapter;
 
     private SharedPreferences loginInfoSP;
@@ -117,6 +118,7 @@ public class Messages extends AppCompatActivity {
         messagesAdapter = new MessagesAdapter(mMessagesList, donatorId);
 
         messagesRecycler = findViewById(R.id.messages_recycler);
+        snackbarUtil = new SnackbarUtil(messagesRecycler);
         messagesRecycler.setLayoutManager(new LinearLayoutManager(this));
         messagesRecycler.setAdapter(messagesAdapter);
 
@@ -170,7 +172,7 @@ public class Messages extends AppCompatActivity {
                     listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
 
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                     hasUser = false;
                 }
 
@@ -195,12 +197,12 @@ public class Messages extends AppCompatActivity {
         String email = personET.getText().toString();
         String message = newMessageET.getText().toString();
         if (email.trim().isEmpty()) {
-            showError("O usuário não pode estar vazio");
+            snackbarUtil.showError("O usuário não pode estar vazio");
             return;
         }
 
         if (message.trim().isEmpty()) {
-            showError("A mensagem não pode estar vazia");
+            snackbarUtil.showError("A mensagem não pode estar vazia");
             return;
         }
 
@@ -215,7 +217,7 @@ public class Messages extends AppCompatActivity {
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonObject.getString("errorMessage"));
+            snackbarUtil.showError(jsonObject.getString("errorMessage"));
             mMessagesList.clear();
             messagesAdapter.notifyDataSetChanged();
             return;
@@ -270,12 +272,12 @@ public class Messages extends AppCompatActivity {
                 try {
                     //listMessage(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, null){
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 return message.getBytes(StandardCharsets.UTF_8);
             }
 
@@ -287,14 +289,4 @@ public class Messages extends AppCompatActivity {
 
             queue.add(messageRequest);
     }
-
-    private void showError(Exception e) {
-        Snackbar.make(messagesRecycler, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(messagesRecycler, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
-    }
-
 }
