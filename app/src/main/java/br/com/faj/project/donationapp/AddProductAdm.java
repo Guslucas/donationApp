@@ -28,6 +28,7 @@ public class AddProductAdm extends AppCompatActivity {
     private EditText productNameET;
     private  EditText typeET;
     private ConstraintLayout addProductLayout;
+    private SnackbarUtil snackbarUtil;
     RequestQueue queue;
 
     @Override
@@ -38,6 +39,7 @@ public class AddProductAdm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product_adm);
         addProductLayout = findViewById(R.id.addProductLayout);
+        snackbarUtil = new SnackbarUtil(addProductLayout);
     }
 
     public void sendProductServer(View view) throws JSONException {
@@ -63,7 +65,7 @@ public class AddProductAdm extends AppCompatActivity {
                     JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
                     if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
-                        showError(jsonResponse.getString("errorMessage"));
+                        snackbarUtil.showError(jsonResponse.getString("errorMessage"));
                         return;
                     }
 
@@ -71,7 +73,7 @@ public class AddProductAdm extends AppCompatActivity {
                     typeET.setText("");
                     Snackbar.make(addProductLayout, "Produto adicionado com sucesso!", BaseTransientBottomBar.LENGTH_LONG).show();
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                     e.printStackTrace();
                 }
 
@@ -79,7 +81,7 @@ public class AddProductAdm extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         }){
             @Override
@@ -97,15 +99,4 @@ public class AddProductAdm extends AppCompatActivity {
 
         queue.add(productRequest);
     }
-
-
-    private void showError(Exception e) {
-        Snackbar.make(addProductLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(addProductLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
-    }
-
 }

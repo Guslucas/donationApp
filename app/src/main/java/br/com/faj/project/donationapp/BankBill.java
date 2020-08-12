@@ -32,6 +32,7 @@ public class BankBill extends AppCompatActivity {
     private SharedPreferences campaignInfo;
     private long idCampaign;
     private RequestQueue queue;
+    private SnackbarUtil snackbarUtil;
     private ConstraintLayout layout;
     private float valor;
 
@@ -46,6 +47,7 @@ public class BankBill extends AppCompatActivity {
         idCampaign = campaignInfo.getLong("ID_CAMPAIGN", -1);
 
         layout = findViewById(R.id.bank_info_layout);
+        snackbarUtil = new SnackbarUtil(layout);
 
         valor = getIntent().getFloatExtra("valor", -1);
 
@@ -84,13 +86,13 @@ public class BankBill extends AppCompatActivity {
                 try {
                     donationResponse(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
                 error.printStackTrace();
             }
         }) {
@@ -113,21 +115,12 @@ public class BankBill extends AppCompatActivity {
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonObject.getString("errorMessage"));
+            snackbarUtil.showError(jsonObject.getString("errorMessage"));
             return;
         }
 
         Intent i = new Intent(this, ThanksDonation.class);
         startActivity(i);
         finishAffinity();
-    }
-
-    private void showError(Exception e) {
-        Snackbar.make(layout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(layout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 }

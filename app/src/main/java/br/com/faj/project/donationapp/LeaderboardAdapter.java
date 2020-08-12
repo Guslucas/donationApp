@@ -18,9 +18,9 @@ class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.Leaderb
 
     private List<LeaderboardItem> itemList;
     private Leaderboard callingActivity;
-    private Integer donatorId;
+    private Long donatorId;
 
-    public LeaderboardAdapter(List<LeaderboardItem> itemList, Leaderboard callingActivity, Integer donatorId) {
+    public LeaderboardAdapter(List<LeaderboardItem> itemList, Leaderboard callingActivity, Long donatorId) {
         this.itemList = itemList;
         this.callingActivity = callingActivity;
         this.donatorId = donatorId;

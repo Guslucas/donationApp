@@ -21,8 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +40,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
     private RecyclerView mProductRecycler;
     private ProductAdapter mProductAdapter;
     private CoordinatorLayout productsLayout;
+    private SnackbarUtil snackbarUtil;
     private long idCampaign;
     private long idDonator;
 
@@ -76,6 +75,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
 
 
         productsLayout = findViewById(R.id.productLayout);
+        snackbarUtil = new SnackbarUtil(productsLayout);
 
 
         finalizarFAB = findViewById(R.id.finalizarFAB);
@@ -85,7 +85,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
                 try {
                     finishProductDonation();
                 } catch (JSONException e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         });
@@ -98,7 +98,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
             try {
                 throw new Exception();
             } catch (Exception e) {
-                showError(e);
+                snackbarUtil.showError(e);
                 e.printStackTrace();
             }
         }
@@ -126,13 +126,13 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
                 try {
                     listProducts(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
                 error.printStackTrace();
             }
         });
@@ -159,7 +159,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
         }
 
         if (!hasAnyProduct) {
-            showError("Nenhum produto selecionado");
+            snackbarUtil.showError("Nenhum produto selecionado");
             return;
         }
 
@@ -181,13 +181,13 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
                 try {
                     responseDonate(response);
                 } catch (JSONException e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         }) {
             @Override
@@ -209,7 +209,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonObject.getString("errorMessage"));
+            snackbarUtil.showError(jsonObject.getString("errorMessage"));
             return;
         }
 
@@ -223,7 +223,7 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
 
         JSONObject jsonObject = (JSONObject) new JSONTokener(response).nextValue();
         if (!jsonObject.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonObject.getString("errorMessage"));
+            snackbarUtil.showError(jsonObject.getString("errorMessage"));
             return;
         }
 
@@ -262,14 +262,4 @@ public class Products extends AppCompatActivity implements CanDonateMoney {
         Intent i = new Intent(this, MoneyDonation.class);
         startActivity(i);
     }
-
-    private void showError(Exception e) {
-        Snackbar.make(productsLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String errorMessage) {
-        Snackbar.make(productsLayout, errorMessage, BaseTransientBottomBar.LENGTH_SHORT).show();
-    }
-
 }

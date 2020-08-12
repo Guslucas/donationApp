@@ -11,17 +11,13 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
@@ -43,6 +39,7 @@ public class Login extends AppCompatActivity {
     SharedPreferences loginInfoSP;
     SharedPreferences.Editor loginInfoEditor;
 
+    SnackbarUtil snackbarUtil;
     ConstraintLayout loginLayout;
 
     @Override
@@ -65,6 +62,7 @@ public class Login extends AppCompatActivity {
         passwordET = findViewById(R.id.passwordEditText);
 
         loginLayout = findViewById(R.id.loginLayout);
+        snackbarUtil = new SnackbarUtil(loginLayout);
 
         loginET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,8 +112,8 @@ public class Login extends AppCompatActivity {
         verifyPreviousLogin();
 
         //TODO para facilitar o login, retirar depois
-        loginET.setText("contato@google.com");
-        passwordET.setText("333");
+        //loginET.setText("contato@google.com");
+        //passwordET.setText("333");
 
     }
 
@@ -147,13 +145,13 @@ public class Login extends AppCompatActivity {
                 try {
                     responseLogIn(new String(response.getBytes("ISO-8859-1"), "UTF-8"));
                 } catch (Exception e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showError(error);
+                snackbarUtil.showError(error);
             }
         }) {
             @Override
@@ -162,7 +160,7 @@ public class Login extends AppCompatActivity {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
 
                 JSONObject loginESenha = new JSONObject();
                 try {
@@ -170,7 +168,7 @@ public class Login extends AppCompatActivity {
                     loginESenha.put("password", password);
                     loginESenha.put("type", "Person");
                 } catch (JSONException e) {
-                    showError(e);
+                    snackbarUtil.showError(e);
                 }
 
                 return loginESenha.toString().getBytes(StandardCharsets.UTF_8);
@@ -186,7 +184,7 @@ public class Login extends AppCompatActivity {
         JSONObject jsonResponse = (JSONObject) (new JSONTokener(response)).nextValue();
 
         if (!jsonResponse.getString("status").equalsIgnoreCase("OK")) {
-            showError(jsonResponse.getString("errorMessage"));
+            snackbarUtil.showError(jsonResponse.getString("errorMessage"));
             return;
         }
 
@@ -213,16 +211,6 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private  void testeCampanha(){
-        Intent intent =  new Intent(this, AddCampaignAdm.class);
-        startActivity(intent);
-    }
-
-    private void testeProduct(){
-        Intent intent =  new Intent(this, AddProductAdm.class);
-        startActivity(intent);
-    }
-
     private void loginSuccess() {
         // Código usado para testes
         Intent intent = new Intent(getApplicationContext(), Menu.class);
@@ -230,49 +218,10 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showError(Exception e) {
-        Snackbar.make(loginLayout, "Erro inesperado. Tente novamente.", BaseTransientBottomBar.LENGTH_SHORT).show();
-        e.printStackTrace();
-    }
-
-    private void showError(String e) {
-        Snackbar.make(loginLayout, e, BaseTransientBottomBar.LENGTH_SHORT).show();
-    }
-
     private void validate(String s) throws IllegalArgumentException {
         if (s.trim().equals("")) {
             throw new IllegalArgumentException("O campo não pode ser vazio.");
         }
-    }
-
-    public void goToMessages() {
-        Intent i = new Intent(this, Messages.class);
-        startActivity(i);
-    }
-
-    public void goToBarCode() {
-        Intent i = new Intent(this, BarCode.class);
-        startActivity(i);
-    }
-
-    public void goToBankInformation() {
-        Intent i = new Intent(this, BankInformation.class);
-        startActivity(i);
-    }
-
-    public void goToProducts() {
-        Intent i = new Intent(this, Products.class);
-        startActivity(i);
-    }
-
-    private void goToMenu() {
-        Intent i = new Intent(this, Menu.class);
-        startActivity(i);
-    }
-
-    private void goToLeaderboard() {
-        Intent i = new Intent(this, Leaderboard.class);
-        startActivity(i);
     }
 
     private void checkAdm(){
@@ -287,20 +236,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View v) {
-
-        //TODO TRAVA APENAS PARA TESTES
-        //testeCampanha();
-        //testeProduct();
-        //loginSuccess();
-        //goToMessages();
-        //goToBarCode();
-        //goToBankInformation();
-        //goToProducts();
-        //goToMenu();
-        //goToLeaderboard();
-        //finish();
-
-
         boolean error = false;
 
         String login = loginET.getText().toString();
